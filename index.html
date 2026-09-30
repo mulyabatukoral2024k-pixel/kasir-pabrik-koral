@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Kasir Pabrik Koral</title>
+<script src="config.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#F1F5F9;color:#1E293B;min-height:100vh;font-size:14px}
+button{cursor:pointer;font-family:inherit}
+input,select,textarea{font-family:inherit;font-size:14px}
+
+#loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,#0F172A 0%,#1E3A5F 100%)}
+.loginBox{background:#fff;border-radius:16px;padding:40px 32px;width:100%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.loginLogo{text-align:center;margin-bottom:24px}
+.loginLogo h1{color:#0F172A;font-size:20px;font-weight:700}
+.loginLogo p{color:#64748B;font-size:13px;margin-top:4px}
+.loginLogo .icon{font-size:40px;margin-bottom:8px}
+.formGroup{margin-bottom:16px}
+.formGroup label{display:block;font-size:12px;font-weight:600;color:#64748B;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+.formGroup input{width:100%;padding:10px 14px;border:1.5px solid #E2E8F0;border-radius:8px;font-size:14px;transition:border .2s}
+.formGroup input:focus{outline:none;border-color:#3B82F6}
+.btnLogin{width:100%;padding:12px;background:#1E3A5F;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600}
+.loginErr{color:#EF4444;font-size:13px;text-align:center;margin-top:12px;display:none}
+
+#appScreen{display:none;min-height:100vh;flex-direction:column}
+.topBar{background:#0F172A;color:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.topBar h2{font-size:15px;font-weight:600}
+.userInfo{font-size:12px;color:#94A3B8;text-align:right}
+.userInfo span{color:#38BDF8;font-weight:600}
+.btnLogout{background:none;border:1px solid #475569;color:#94A3B8;padding:4px 10px;border-radius:6px;font-size:12px;cursor:pointer}
+.btnLogout:hover{border-color:#EF4444;color:#EF4444}
+
+.tabBar{background:#fff;display:flex;border-bottom:2px solid #E2E8F0;overflow-x:auto;position:sticky;top:49px;z-index:99}
+.tabBtn{padding:12px 18px;border:none;background:none;color:#64748B;font-size:13px;font-weight:500;white-space:nowrap;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;cursor:pointer}
+.tabBtn.active{color:#2563EB;border-bottom-color:#2563EB;font-weight:700}
+
+.tabContent{display:none;padding:16px;max-width:700px;margin:0 auto;width:100%}
+.tabContent.active{display:block}
+
+.card{background:#fff;border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.card h3{font-size:14px;font-weight:700;color:#0F172A;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+
+.fRow{margin-bottom:14px}
+.fRow label{display:block;font-size:12px;font-weight:600;color:#64748B;margin-bottom:5px;text-transform:uppercase;letter-spacing:.4px}
+.fRow input,.fRow select,.fRow textarea{width:100%;padding:9px 12px;border:1.5px solid #E2E8F0;border-radius:8px;font-size:14px;transition:border .2s;background:#fff}
+.fRow input:focus,.fRow select:focus{outline:none;border-color:#3B82F6;background:#F0F9FF}
+.fRow.yellow input,.fRow.yellow select{background:#FEFCE8;border-color:#FCD34D}
+.fRow2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+.btn{padding:10px 20px;border:none;border-radius:8px;font-size:14px;font-weight:600;transition:all .2s;display:inline-flex;align-items:center;justify-content:center;gap:6px;cursor:pointer}
+.btnPrimary{background:#1E3A5F;color:#fff}
+.btnPrimary:hover{background:#2563EB}
+.btnSuccess{background:#065F46;color:#fff}
+.btnSuccess:hover{background:#059669}
+.btnWarning{background:#92400E;color:#fff}
+.btnWarning:hover{background:#D97706}
+.btnDanger{background:#991B1B;color:#fff}
+.btnDanger:hover{background:#EF4444}
+.btnGray{background:#E2E8F0;color:#475569}
+.btnGray:hover{background:#CBD5E1}
+.btnFull{width:100%;padding:12px}
+
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.badgeWaiting{background:#FEF3C7;color:#92400E}
+.badgeValid{background:#D1FAE5;color:#065F46}
+.badgeLate{background:#FEE2E2;color:#991B1B}
+
+.tiketItem{border:1.5px solid #E2E8F0;border-radius:10px;padding:14px;margin-bottom:10px;background:#FAFAFA}
+.tiketItem:hover{border-color:#93C5FD;background:#F0F9FF}
+.tiketHeader{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.tiketNoSeri{font-size:12px;font-weight:700;color:#3B82F6;font-family:monospace}
+.tiketBody{display:grid;grid-template-columns:1fr 1fr;gap:4px 16px}
+.tiketRow{font-size:12px;color:#64748B}
+.tiketRow strong{color:#1E293B}
+.tiketActions{margin-top:12px;display:flex;gap:8px}
+
+.strukBox{background:#fff;border:2px dashed #CBD5E1;border-radius:10px;padding:20px;font-family:monospace;font-size:13px;line-height:1.8;max-width:340px;margin:0 auto}
+.str-header{text-align:center;border-bottom:1px dashed #94A3B8;padding-bottom:10px;margin-bottom:10px}
+.str-footer{text-align:center;border-top:1px dashed #94A3B8;padding-top:10px;margin-top:10px;font-size:11px;color:#64748B}
+.strukRow{display:flex;justify-content:space-between}
+.strukTotal{border-top:1px solid #1E293B;margin-top:6px;padding-top:6px;font-weight:700}
+
+.kpiGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.kpiCard{background:#fff;border-radius:12px;padding:16px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.kpiCard .val{font-size:16px;font-weight:700;color:#0F172A;margin-bottom:4px}
+.kpiCard .lbl{font-size:11px;color:#64748B;font-weight:500}
+.kpiCard.green .val{color:#065F46}
+.kpiCard.red .val{color:#991B1B}
+.kpiCard.blue .val{color:#1E40AF}
+
+.alert{padding:12px 16px;border-radius:8px;margin-bottom:12px;font-size:13px;display:none}
+.alertSuccess{background:#D1FAE5;color:#065F46;border:1px solid #6EE7B7}
+.alertError{background:#FEE2E2;color:#991B1B;border:1px solid #FCA5A5}
+.alertInfo{background:#DBEAFE;color:#1E40AF;border:1px solid #93C5FD}
+
+.loading{text-align:center;padding:32px;color:#64748B}
+.spinner{display:inline-block;width:28px;height:28px;border:3px solid #E2E8F0;border-top-color:#3B82F6;border-radius:50%;animation:spin .8s linear infinite;margin-bottom:8px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.summaryBox{background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:14px;margin-top:14px}
+.summaryRow{display:flex;justify-content:space-between;padding:4px 0;font-size:13px}
+.summaryRow.total{border-top:2px solid #1E293B;margin-top:6px;padding-top:8px;font-weight:700;font-size:15px}
+
+@media(max-width:480px){
+  .fRow2{grid-template-columns:1fr}
+  .tiketBody{grid-template-columns:1fr}
+  .loginBox{margin:16px;padding:28px 20px}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="loginBox">
+    <div class="loginLogo">
+      <div class="icon">⛏️</div>
+      <h1>CV Mulya Batu Coral</h1>
+      <p>Pabrik Penggilingan Koral — Sistem Kasir</p>
+    </div>
+    <div class="formGroup">
+      <label>Username</label>
+      <input type="text" id="loginUser" placeholder="Masukkan username" autocomplete="username">
+    </div>
+    <div class="formGroup">
+      <label>Password</label>
+      <input type="password" id="loginPass" placeholder="Masukkan password">
+    </div>
+    <button class="btnLogin" onclick="doLogin()">🔐 Masuk</button>
+    <div class="loginErr" id="loginErr"></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="appScreen">
+  <div class="topBar">
+    <h2>⛏️ Kasir Pabrik Koral</h2>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="userInfo">
+        <div><span id="namaUser">-</span></div>
+        <div id="roleUser" style="font-size:11px;color:#94A3B8">-</div>
+      </div>
+      <button class="btnLogout" onclick="doLogout()">Keluar</button>
+    </div>
+  </div>
+  <div class="tabBar" id="tabBar"></div>
+
+  <!-- TAB LOADER -->
+  <div class="tabContent" id="tab-loader">
+    <div class="card">
+      <h3>🚜 Input Tiket Muatan</h3>
+      <div class="alert alertSuccess" id="loaderAlert"></div>
+      <div class="fRow yellow"><label>No Plat Truk *</label>
+        <input type="text" id="l_noPlat" placeholder="AG 1234 AB" style="text-transform:uppercase"></div>
+      <div class="fRow yellow"><label>Pelanggan *</label>
+        <select id="l_pelanggan"><option value="">-- Pilih Pelanggan --</option></select></div>
+      <div class="fRow yellow"><label>Produk *</label>
+        <select id="l_produk"><option value="">-- Pilih Produk --</option></select></div>
+      <div class="fRow2">
+        <div class="fRow yellow"><label>Kubik (m³) *</label>
+          <input type="number" id="l_kubik" placeholder="6.5" step="0.1" min="0"></div>
+        <div class="fRow yellow"><label>Kondisi Muatan</label>
+          <select id="l_kondisi">
+            <option>Peres</option><option>Munjung Sedang</option><option>Munjung Tinggi</option>
+          </select></div>
+      </div>
+      <div class="fRow"><label>Operator Loader</label>
+        <select id="l_loader"><option value="">-- Nama Loader --</option></select></div>
+      <div class="fRow"><label>Keterangan</label>
+        <input type="text" id="l_ket" placeholder="Catatan tambahan"></div>
+      <button class="btn btnPrimary btnFull" onclick="submitLoader()">📋 Buat Tiket</button>
+    </div>
+  </div>
+
+  <!-- TAB CHECKER -->
+  <div class="tabContent" id="tab-checker">
+    <div class="card">
+      <h3>✅ Antrean Tiket</h3>
+      <div class="alert alertInfo" id="checkerAlert"></div>
+      <button class="btn btnGray" style="margin-bottom:14px" onclick="loadCheckerQueue()">🔄 Refresh</button>
+      <div id="checkerQueue"><div class="loading"><div class="spinner"></div><br>Memuat...</div></div>
+    </div>
+    <div class="card">
+      <h3>🪨 Input Grosok Masuk</h3>
+      <div class="alert alertSuccess" id="grosokAlert"></div>
+      <div class="fRow yellow"><label>Supplier *</label>
+        <select id="g_supplier"><option value="">-- Pilih Supplier --</option></select></div>
+      <div class="fRow yellow"><label>Jenis Grosok *</label>
+        <select id="g_jenis"><option value="">-- Pilih Jenis --</option></select></div>
+      <div class="fRow2">
+        <div class="fRow yellow"><label>Jumlah Rit *</label>
+          <input type="number" id="g_rit" value="1" min="1"></div>
+        <div class="fRow"><label>Target Mesin</label>
+          <select id="g_mesin"><option>Jaw Crusher</option><option>Hammermill</option></select></div>
+      </div>
+      <div class="fRow2">
+        <div class="fRow"><label>No Plat Truk</label>
+          <input type="text" id="g_plat" placeholder="AG 1234 AB" style="text-transform:uppercase"></div>
+        <div class="fRow"><label>No Surat Jalan</label>
+          <input type="text" id="g_sj" placeholder="SJ-001"></div>
+      </div>
+      <div class="fRow2">
+        <div class="fRow"><label>Status Bayar</label>
+          <select id="g_status"><option>Belum Lunas</option><option>Lunas</option></select></div>
+        <div class="fRow"><label>Kondisi Grosok</label>
+          <select id="g_kondisi"><option>Normal</option><option>Lengket/Linet</option><option>Ada Batu Oversize</option></select></div>
+      </div>
+      <div class="fRow"><label>Keterangan</label>
+        <input type="text" id="g_ket" placeholder="Catatan"></div>
+      <button class="btn btnWarning btnFull" onclick="submitGrosok()">🪨 Simpan Grosok</button>
+    </div>
+  </div>
+
+  <!-- TAB KASIR -->
+  <div class="tabContent" id="tab-kasir">
+    <div class="card" id="kasirQueueCard">
+      <h3>🎫 Tiket Siap Diproses</h3>
+      <div class="alert alertInfo" id="kasirAlert"></div>
+      <button class="btn btnGray" style="margin-bottom:14px" onclick="refreshKasirQueue()">🔄 Refresh</button>
+      <div id="kasirQueue"><div class="loading"><div class="spinner"></div><br>Memuat...</div></div>
+    </div>
+    <div class="card" id="bayarCard" style="display:none">
+      <h3>💰 Proses Pembayaran</h3>
+      <div class="alert alertSuccess" id="bayarAlert"></div>
+      <div id="bayarInfo" style="background:#F8FAFC;border-radius:8px;padding:12px;margin-bottom:14px;font-size:13px;line-height:1.8"></div>
+      <div class="fRow2">
+        <div class="fRow yellow"><label>Harga Deal /m³ (Rp)</label>
+          <input type="number" id="b_hargaDeal" oninput="hitungTotal()"></div>
+        <div class="fRow"><label>Ongkos Kirim (Rp)</label>
+          <input type="number" id="b_ongkir" value="0" oninput="hitungTotal()"></div>
+      </div>
+      <div class="summaryBox" id="bayarSummary"></div>
+      <div class="fRow yellow" style="margin-top:14px"><label>Metode Bayar *</label>
+        <select id="b_metode" onchange="cekMetodeBayar()">
+          <option value="Cash">Cash</option>
+          <option value="TF - Rek. CV (Utama)">TF - Rek. CV (Utama)</option>
+          <option value="TF - Rek. Operasional 2">TF - Rek. Operasional 2</option>
+          <option value="TF - Rek. Owner">TF - Rek. Owner</option>
+          <option value="TF - Rek. Direktur">TF - Rek. Direktur</option>
+          <option value="QRIS">QRIS</option>
+          <option value="QRIS-Pending">QRIS-Pending</option>
+          <option value="Belum Bayar">Belum Bayar (BON penuh)</option>
+          <option value="Belum Lunas">Belum Lunas (bayar sebagian)</option>
+          <option value="Drop Safe">Drop Safe</option>
+        </select></div>
+      <div id="bayarTunaiBox">
+        <div class="fRow2">
+          <div class="fRow yellow"><label>Uang Diterima (Rp)</label>
+            <input type="number" id="b_diterima" placeholder="0" oninput="hitungKembalian()"></div>
+          <div class="fRow"><label>Kembalian (Rp)</label>
+            <input type="number" id="b_kembalian" readonly style="background:#F1F5F9;color:#065F46;font-weight:700"></div>
+        </div>
+      </div>
+      <div id="bayarSebagianBox" style="display:none">
+        <div class="fRow yellow"><label>Bayar Sebagian / DP (Rp)</label>
+          <input type="number" id="b_dp" placeholder="0" oninput="hitungSisaBon()"></div>
+        <div id="sisaBonInfo" style="background:#F3E8FF;border-radius:8px;padding:10px;font-size:13px;color:#6B21A8;margin-bottom:10px"></div>
+      </div>
+      <div id="bonPenuhBox" style="display:none">
+        <div style="background:#F3E8FF;border-radius:8px;padding:12px;font-size:13px;color:#6B21A8;margin-bottom:10px">
+          ⚠️ Seluruh tagihan dicatat sebagai <strong>Piutang / BON</strong>. Tidak ada uang diterima.
+        </div>
+      </div>
+      <div id="pinOwnerBox" style="display:none">
+        <div class="fRow"><label>🔒 PIN Owner (diskon lebih dari Rp 10.000/m³)</label>
+          <input type="password" id="b_pin" placeholder="PIN Owner"></div>
+      </div>
+      <div class="fRow"><label>Keterangan</label>
+        <input type="text" id="b_ket" placeholder="Opsional"></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btnGray" onclick="batalBayar()">✖ Batal</button>
+        <button class="btn btnSuccess btnFull" onclick="prosesLunas()">✅ SIMPAN & CETAK STRUK</button>
+      </div>
+    </div>
+    <div id="strukArea" style="display:none">
+      <div class="card">
+        <h3>🧾 Struk Transaksi</h3>
+        <div class="strukBox" id="strukBox"></div>
+        <div style="display:flex;gap:8px;margin-top:14px">
+          <button class="btn btnPrimary btnFull" onclick="window.print()">🖨️ Cetak</button>
+          <button class="btn btnGray btnFull" onclick="tutupStruk()">✖ Tutup</button>
+        </div>
+      </div>
+    </div>
+    <!-- Pemasukan Lain pindah ke sini -->
+    <div class="card">
+      <h3>💳 Input Pemasukan Lain</h3>
+      <div class="alert alertSuccess" id="pemasukanAlert"></div>
+      <div class="fRow yellow"><label>Jenis Pemasukan *</label>
+        <select id="pm_jenis">
+          <option value="">-- Pilih --</option>
+          <option>Penyewaan Alat Berat</option>
+          <option>Penyewaan Truk</option>
+          <option>Ongkos Kirim</option>
+          <option>DLL</option>
+        </select></div>
+      <div class="fRow2">
+        <div class="fRow yellow"><label>Nominal (Rp) *</label>
+          <input type="number" id="pm_nominal" placeholder="0"></div>
+        <div class="fRow"><label>Metode Bayar</label>
+          <select id="pm_metode">
+            <option value="Cash">Cash</option>
+            <option value="TF - Rek. CV (Utama)">TF - Rek. CV</option>
+            <option value="QRIS">QRIS</option>
+          </select></div>
+      </div>
+      <div class="fRow"><label>Keterangan</label>
+        <input type="text" id="pm_ket" placeholder="Detail pemasukan"></div>
+      <button class="btn btnSuccess btnFull" onclick="submitPemasukan()">💳 Simpan Pemasukan</button>
+    </div>
+    <div class="card">
+      <h3>📤 Input Pengeluaran</h3>
+      <div class="alert alertSuccess" id="pengeluaranAlert"></div>
+      <div class="fRow yellow"><label>Kategori *</label>
+        <select id="pe_jenis"><option value="">-- Pilih Kategori --</option></select></div>
+      <div class="fRow2">
+        <div class="fRow yellow"><label>Total (Rp) *</label>
+          <input type="number" id="pe_total" placeholder="0"></div>
+        <div class="fRow"><label>Status</label>
+          <select id="pe_status"><option>Lunas</option><option>Belum Lunas</option></select></div>
+      </div>
+      <div class="fRow"><label>Keterangan / Nama Penerima</label>
+        <input type="text" id="pe_ket" placeholder="Contoh: Beli solar loader"></div>
+      <button class="btn btnWarning btnFull" onclick="submitPengeluaran()">📤 Simpan Pengeluaran</button>
+    </div>
+    <div class="card">
+      <h3>🔒 Tutup Kasir Harian</h3>
+      <div class="alert alertSuccess" id="tutupAlert"></div>
+      <div id="tutupSummary" style="background:#F8FAFC;border-radius:8px;padding:12px;margin-bottom:14px;font-size:13px;color:#64748B">
+        Klik tombol di bawah untuk memuat data hari ini.</div>
+      <button class="btn btnGray" style="margin-bottom:14px" onclick="loadTutupKasir()">📊 Muat Data Hari Ini</button>
+      <div class="fRow2">
+        <div class="fRow yellow"><label>Lembar Rp 100.000</label>
+          <input type="number" id="tk_100" value="0" min="0" oninput="hitungFisik()"></div>
+        <div class="fRow yellow"><label>Lembar Rp 50.000</label>
+          <input type="number" id="tk_50" value="0" min="0" oninput="hitungFisik()"></div>
+      </div>
+      <div class="fRow2">
+        <div class="fRow yellow"><label>Uang Pecahan Kecil (Rp)</label>
+          <input type="number" id="tk_pecahan" value="0" min="0" oninput="hitungFisik()"></div>
+        <div class="fRow"><label>Total Uang Fisik (Rp)</label>
+          <input type="number" id="tk_totalFisik" readonly style="background:#DBEAFE;font-weight:700;color:#1E40AF"></div>
+      </div>
+      <div class="fRow yellow"><label>Setor Drop Safe (Rp)</label>
+        <input type="number" id="tk_dropSafe" value="0" min="0"></div>
+      <div class="fRow"><label>Keterangan (jika ada selisih)</label>
+        <input type="text" id="tk_ket" placeholder="Penjelasan selisih"></div>
+      <button class="btn btnDanger btnFull" onclick="submitTutupKasir()">🔒 Tutup Kasir & Simpan</button>
+    </div>
+    <div class="card">
+      <h3>📱 Update QRIS-Pending</h3>
+      <div class="fRow yellow"><label>No Seri Transaksi</label>
+        <input type="text" id="qris_noSeri" placeholder="PJ-202611-0001"></div>
+      <button class="btn btnPrimary" onclick="updateQris()">✅ Update ke QRIS Lunas</button>
+    </div>
+  </div>
+
+  <!-- TAB PIUTANG -->
+  <div class="tabContent" id="tab-piutang">
+    <div class="card">
+      <h3>📋 Daftar Piutang / BON Belum Lunas</h3>
+      <button class="btn btnGray" style="margin-bottom:14px" onclick="loadPiutang()">🔄 Refresh</button>
+      <div id="piutangList"><div class="loading"><div class="spinner"></div><br>Memuat...</div></div>
+    </div>
+  </div>
+
+  <!-- TAB OWNER -->
+  <div class="tabContent" id="tab-owner">
+    <div class="kpiGrid" id="kpiGrid">
+      <div class="loading" style="grid-column:span 2"><div class="spinner"></div><br>Memuat dashboard...</div>
+    </div>
+    <div class="card">
+      <h3>📊 Ringkasan Hari Ini</h3>
+      <button class="btn btnGray" onclick="loadDashboard()">🔄 Refresh</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var STATE = { user:null, master:null, selectedTiket:null, tutupData:null };
+
+// ── HELPER ───────────────────────────────────────────────────
+function fRp(n){ return 'Rp '+(parseFloat(n)||0).toLocaleString('id-ID'); }
+
+function nowDateStr(){
+  var d=new Date();
+  return ('0'+d.getDate()).slice(-2)+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+d.getFullYear();
+}
+
+function showAlert(id,type,msg){
+  var el=document.getElementById(id); if(!el) return;
+  el.className='alert alert'+(type==='success'?'Success':type==='error'?'Error':'Info');
+  el.textContent=msg; el.style.display='block';
+  if(type==='success') setTimeout(function(){ el.style.display='none'; },4000);
+}
+
+// ── API CALL — ganti google.script.run dengan fetch ──────────
+function api(action, params, callback) {
+  var url = SCRIPT_URL + '?action=' + encodeURIComponent(action);
+  fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify(params || {})
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){ callback(data); })
+  .catch(function(e){ callback({ ok:false, pesan:'Network error: '+e.message }); });
+}
+
+// ── LOGIN ────────────────────────────────────────────────────
+document.getElementById('loginPass').addEventListener('keypress',function(e){
+  if(e.key==='Enter') doLogin();
+});
+
+function doLogin(){
+  var u=document.getElementById('loginUser').value.trim();
+  var p=document.getElementById('loginPass').value;
+  if(!u||!p){ showLoginErr('Username dan password wajib diisi.'); return; }
+  showLoginErr('');
+  document.querySelector('.btnLogin').textContent='⏳ Memuat...';
+  api('login',{username:u,password:p},function(res){
+    document.querySelector('.btnLogin').textContent='🔐 Masuk';
+    if(res.ok){ STATE.user=res; initApp(res); }
+    else showLoginErr(res.pesan||'Login gagal.');
+  });
+}
+
+function showLoginErr(msg){
+  var el=document.getElementById('loginErr');
+  el.textContent=msg; el.style.display=msg?'block':'none';
+}
+
+function doLogout(){
+  STATE.user=null; STATE.master=null; STATE.selectedTiket=null;
+  document.getElementById('loginScreen').style.display='flex';
+  document.getElementById('appScreen').style.display='none';
+  document.getElementById('loginUser').value='';
+  document.getElementById('loginPass').value='';
+}
+
+// ── INIT APP ─────────────────────────────────────────────────
+function initApp(user){
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('appScreen').style.display='flex';
+  document.getElementById('namaUser').textContent=user.nama;
+  document.getElementById('roleUser').textContent=getRoleLabel(user.roleKey);
+  buildTabs(user.roleKey);
+  loadMaster();
+}
+
+function getRoleLabel(r){
+  var l={owner:'Owner / Direktur',direktur:'Owner / Direktur',kasir:'Kasir Loket',loader:'Operator Loader',checker:'Checker / Mandor'};
+  return l[r]||r;
+}
+
+function buildTabs(role){
+  var tabs=[];
+  if(['loader','owner','direktur'].indexOf(role)>-1) tabs.push({id:'loader',label:'🚜 Loader'});
+  if(['checker','owner','direktur'].indexOf(role)>-1) tabs.push({id:'checker',label:'✅ Checker'});
+  if(['kasir','owner','direktur'].indexOf(role)>-1){
+    tabs.push({id:'kasir',label:'💰 Kasir'});
+    tabs.push({id:'piutang',label:'📋 Piutang'});
+  }
+  if(['owner','direktur'].indexOf(role)>-1) tabs.push({id:'owner',label:'📊 Owner'});
+  var bar=document.getElementById('tabBar'); bar.innerHTML='';
+  tabs.forEach(function(t,i){
+    var btn=document.createElement('button');
+    btn.className='tabBtn'+(i===0?' active':'');
+    btn.textContent=t.label;
+    btn.onclick=(function(tid,b){ return function(){ switchTab(tid,b); }; })(t.id,btn);
+    bar.appendChild(btn);
+  });
+  if(tabs.length>0) showTab(tabs[0].id);
+  if(['checker','owner','direktur'].indexOf(role)>-1) setTimeout(loadCheckerQueue,600);
+  if(['kasir','owner','direktur'].indexOf(role)>-1) setTimeout(loadCashierQueue,600);
+  if(['owner','direktur'].indexOf(role)>-1) setTimeout(loadDashboard,700);
+}
+
+function switchTab(id,btn){
+  document.querySelectorAll('.tabBtn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active'); showTab(id);
+}
+
+function showTab(id){
+  document.querySelectorAll('.tabContent').forEach(function(c){ c.classList.remove('active'); });
+  var el=document.getElementById('tab-'+id); if(el) el.classList.add('active');
+}
+
+// ── MASTER DATA ──────────────────────────────────────────────
+function loadMaster(){
+  api('getMasterData',{},function(res){
+    if(res.ok){ STATE.master=res.data; fillDropdowns(); }
+  });
+}
+
+function fillDropdowns(){
+  var m=STATE.master; if(!m) return;
+  fillSelect('l_pelanggan',m.pelanggan.map(function(p){ return {val:p.nama,label:p.nama+(p.fastTrack?' 🟢':'')}; }),'-- Pilih Pelanggan --');
+  fillSelect('l_produk',m.produk.map(function(p){ return {val:p.nama,label:p.nama+' — '+fRp(p.harga)+'/m³'}; }),'-- Pilih Produk --');
+  fillSelect('l_loader',m.karyawan.map(function(k){ return {val:k,label:k}; }),'-- Nama Loader --');
+  fillSelect('g_supplier',m.supplier.map(function(s){ return {val:s.nama,label:s.nama}; }),'-- Pilih Supplier --');
+  fillSelect('g_jenis',m.grosok.map(function(g){ return {val:g.nama,label:g.nama+' ('+g.mesin+')'}; }),'-- Pilih Jenis --');
+  fillSelect('pe_jenis',m.pengeluaran.map(function(k){ return {val:k,label:k}; }),'-- Pilih Kategori --');
+  document.getElementById('g_jenis').addEventListener('change',function(){
+    var g=m.grosok.find(function(x){ return x.nama===this.value; },this);
+    if(g&&g.mesin) document.getElementById('g_mesin').value=g.mesin;
+  });
+}
+
+function fillSelect(id,items,placeholder){
+  var el=document.getElementById(id); if(!el) return;
+  el.innerHTML='<option value="">'+placeholder+'</option>';
+  items.forEach(function(item){
+    var opt=document.createElement('option');
+    opt.value=item.val; opt.textContent=item.label; el.appendChild(opt);
+  });
+}
+
+// ── LOADER ───────────────────────────────────────────────────
+function submitLoader(){
+  var noPlat=document.getElementById('l_noPlat').value.trim().toUpperCase();
+  var pelanggan=document.getElementById('l_pelanggan').value;
+  var produk=document.getElementById('l_produk').value;
+  var kubik=parseFloat(document.getElementById('l_kubik').value);
+  var kondisi=document.getElementById('l_kondisi').value;
+  var loader=document.getElementById('l_loader').value||STATE.user.nama;
+  var ket=document.getElementById('l_ket').value;
+  if(!noPlat||!pelanggan||!produk||!kubik){ showAlert('loaderAlert','error','No Plat, Pelanggan, Produk, dan Kubik wajib diisi!'); return; }
+  showAlert('loaderAlert','info','⏳ Menyimpan tiket...');
+  api('submitLoaderTicket',{noPlat:noPlat,pelanggan:pelanggan,produk:produk,kubik:kubik,kondisiMuatan:kondisi,loader:loader,keterangan:ket},function(res){
+    if(res.ok){
+      showAlert('loaderAlert','success','✅ Tiket: '+res.noSeri);
+      document.getElementById('l_noPlat').value='';
+      document.getElementById('l_pelanggan').value='';
+      document.getElementById('l_produk').value='';
+      document.getElementById('l_kubik').value='';
+      document.getElementById('l_ket').value='';
+    } else showAlert('loaderAlert','error','❌ '+res.pesan);
+  });
+}
+
+// ── CHECKER ──────────────────────────────────────────────────
+function loadCheckerQueue(){
+  document.getElementById('checkerQueue').innerHTML='<div class="loading"><div class="spinner"></div><br>Memuat...</div>';
+  api('getCheckerQueue',{},function(res){
+    if(!res.ok){ document.getElementById('checkerQueue').innerHTML='<p style="color:#EF4444;padding:12px">❌ '+res.pesan+'</p>'; return; }
+    var q=res.data;
+    if(!q.length){ document.getElementById('checkerQueue').innerHTML='<p style="text-align:center;color:#64748B;padding:20px">✅ Tidak ada tiket menunggu.</p>'; return; }
+    var html='';
+    q.forEach(function(t){
+      html+='<div class="tiketItem">'+
+        '<div class="tiketHeader"><span class="tiketNoSeri">'+t.noSeri+'</span><span class="badge badgeWaiting">Menunggu</span></div>'+
+        '<div class="tiketBody">'+
+        '<div class="tiketRow">🚛 <strong>'+t.noPlat+'</strong></div>'+
+        '<div class="tiketRow">👤 <strong>'+t.pelanggan+'</strong></div>'+
+        '<div class="tiketRow">📦 '+t.produk+'</div>'+
+        '<div class="tiketRow">📐 Kubik: <strong>'+t.kubik+' m³</strong></div>'+
+        '<div class="tiketRow">⏰ '+t.waktu+'</div>'+
+        '<div class="tiketRow">🚜 '+t.loader+'</div>'+
+        '</div>'+
+        '<div class="tiketActions">'+
+        '<input type="number" id="kubik_'+t.row+'" value="'+t.kubik+'" step="0.1" min="0" style="width:110px;padding:6px;border:1.5px solid #FCD34D;border-radius:6px;background:#FEFCE8">'+
+        '<button class="btn btnSuccess" onclick="validasiTiket('+t.row+',\''+t.noSeri+'\')">✅ Validasi</button>'+
+        '</div></div>';
+    });
+    document.getElementById('checkerQueue').innerHTML=html;
+  });
+}
+
+function validasiTiket(rowNum,noSeri){
+  var kubikFinal=parseFloat(document.getElementById('kubik_'+rowNum).value);
+  if(!kubikFinal){ showAlert('checkerAlert','error','Kubik final wajib diisi!'); return; }
+  showAlert('checkerAlert','info','⏳ Memvalidasi...');
+  api('approveCheckerTicket',{rowNum:rowNum,kubikFinal:kubikFinal,checker:STATE.user.nama,kondisi:'Peres',catatan:''},function(res){
+    if(res.ok){ showAlert('checkerAlert','success','✅ Tiket '+noSeri+' divalidasi.'); setTimeout(loadCheckerQueue,1000); }
+    else showAlert('checkerAlert','error','❌ '+res.pesan);
+  });
+}
+
+function submitGrosok(){
+  var supplier=document.getElementById('g_supplier').value;
+  var jenis=document.getElementById('g_jenis').value;
+  var rit=parseInt(document.getElementById('g_rit').value)||1;
+  var mesin=document.getElementById('g_mesin').value;
+  var plat=document.getElementById('g_plat').value.toUpperCase();
+  var sj=document.getElementById('g_sj').value;
+  var status=document.getElementById('g_status').value;
+  var kondisi=document.getElementById('g_kondisi').value;
+  var ket=document.getElementById('g_ket').value;
+  if(!supplier||!jenis){ showAlert('grosokAlert','error','Supplier dan Jenis Grosok wajib diisi!'); return; }
+  var g=STATE.master?STATE.master.grosok.find(function(x){ return x.nama===jenis; }):null;
+  var nominal=g?g.harga*rit:0;
+  showAlert('grosokAlert','info','⏳ Menyimpan...');
+  api('simpanGrosok',{supplier:supplier,jenisGrosok:jenis,rit:rit,targetMesin:mesin,noPlat:plat,noSuratJalan:sj,statusBayar:status,kondisiMuatan:kondisi,nominal:nominal,checker:STATE.user.nama,keterangan:ket},function(res){
+    if(res.ok){ showAlert('grosokAlert','success','✅ Grosok: '+res.noSeri); document.getElementById('g_rit').value=1; document.getElementById('g_plat').value=''; document.getElementById('g_sj').value=''; document.getElementById('g_ket').value=''; }
+    else showAlert('grosokAlert','error','❌ '+res.pesan);
+  });
+}
+
+// ── KASIR ────────────────────────────────────────────────────
+function loadCashierQueue(){
+  if(STATE.selectedTiket) return;
+  document.getElementById('kasirQueue').innerHTML='<div class="loading"><div class="spinner"></div><br>Memuat...</div>';
+  api('getCashierQueue',{},renderKasirQueue);
+}
+
+function refreshKasirQueue(){
+  STATE.selectedTiket=null;
+  document.getElementById('bayarCard').style.display='none';
+  document.getElementById('strukArea').style.display='none';
+  document.getElementById('kasirQueueCard').style.display='block';
+  loadCashierQueue();
+}
+
+function renderKasirQueue(res){
+  if(!res.ok){ document.getElementById('kasirQueue').innerHTML='<p style="color:#EF4444;padding:12px">❌ '+res.pesan+'</p>'; return; }
+  var q=res.data;
+  if(!q.length){ document.getElementById('kasirQueue').innerHTML='<p style="text-align:center;color:#64748B;padding:20px">✅ Tidak ada tiket untuk diproses.</p>'; return; }
+  var html='';
+  q.forEach(function(t){
+    html+='<div class="tiketItem">'+
+      '<div class="tiketHeader"><span class="tiketNoSeri">'+t.noSeri+'</span><span class="badge badgeValid">Tervalidasi</span></div>'+
+      '<div class="tiketBody">'+
+      '<div class="tiketRow">🚛 <strong>'+t.noPlat+'</strong></div>'+
+      '<div class="tiketRow">👤 <strong>'+t.pelanggan+'</strong></div>'+
+      '<div class="tiketRow">📦 '+t.produk+'</div>'+
+      '<div class="tiketRow">📐 '+t.kubik+' m³ @ '+fRp(t.hargaStandar)+'</div>'+
+      '<div class="tiketRow">💰 <strong>'+fRp(t.subtotal)+'</strong></div>'+
+      '<div class="tiketRow">✅ Checker: '+t.checker+'</div>'+
+      '</div>'+
+      '<div class="tiketActions">'+
+      '<button class="btn btnSuccess btnFull" onclick=\'pilihTiket('+JSON.stringify(t)+')\'>💰 Proses Bayar</button>'+
+      '</div></div>';
+  });
+  document.getElementById('kasirQueue').innerHTML=html;
+}
+
+function pilihTiket(t){
+  STATE.selectedTiket=t;
+  document.getElementById('kasirQueueCard').style.display='none';
+  document.getElementById('bayarCard').style.display='block';
+  document.getElementById('strukArea').style.display='none';
+  document.getElementById('b_hargaDeal').value=t.hargaStandar;
+  document.getElementById('b_ongkir').value=0;
+  document.getElementById('b_diterima').value='';
+  document.getElementById('b_kembalian').value=0;
+  document.getElementById('b_dp').value='';
+  document.getElementById('b_ket').value='';
+  document.getElementById('b_metode').value='Cash';
+  document.getElementById('bayarInfo').innerHTML=
+    '<strong>'+t.noSeri+'</strong> | '+t.noPlat+
+    '<br>👤 '+t.pelanggan+' | 📦 '+t.produk+' | 📐 '+t.kubik+' m³'+
+    '<br>🔖 Harga standar: <strong>'+fRp(t.hargaStandar)+'/m³</strong>';
+  cekMetodeBayar(); hitungTotal(); window.scrollTo(0,0);
+}
+
+function cekMetodeBayar(){
+  var m=document.getElementById('b_metode').value;
+  document.getElementById('bayarTunaiBox').style.display=(m!=='Belum Bayar'&&m!=='Belum Lunas')?'block':'none';
+  document.getElementById('bonPenuhBox').style.display=m==='Belum Bayar'?'block':'none';
+  document.getElementById('bayarSebagianBox').style.display=m==='Belum Lunas'?'block':'none';
+  if(m==='Belum Lunas') hitungSisaBon();
+}
+
+function hitungTotal(){
+  var t=STATE.selectedTiket; if(!t) return;
+  var hargaDeal=parseFloat(document.getElementById('b_hargaDeal').value)||t.hargaStandar;
+  var ongkir=parseFloat(document.getElementById('b_ongkir').value)||0;
+  var subtotal=t.kubik*hargaDeal;
+  var total=subtotal+ongkir;
+  var diskon=(t.hargaStandar-hargaDeal)*t.kubik;
+  document.getElementById('bayarSummary').innerHTML=
+    '<div class="summaryRow"><span>'+t.kubik+' m³ × '+fRp(hargaDeal)+'</span><span>'+fRp(subtotal)+'</span></div>'+
+    (diskon>0?'<div class="summaryRow" style="color:#D97706"><span>💸 Diskon</span><span>-'+fRp(diskon)+'</span></div>':'')+
+    (ongkir>0?'<div class="summaryRow"><span>🚚 Ongkir</span><span>'+fRp(ongkir)+'</span></div>':'')+
+    '<div class="summaryRow total"><span>TOTAL TAGIHAN</span><span>'+fRp(total)+'</span></div>';
+  document.getElementById('pinOwnerBox').style.display=(t.hargaStandar-hargaDeal>10000)?'block':'none';
+  hitungKembalian(); hitungSisaBon();
+}
+
+function hitungKembalian(){
+  var t=STATE.selectedTiket; if(!t) return;
+  var hargaDeal=parseFloat(document.getElementById('b_hargaDeal').value)||t.hargaStandar;
+  var ongkir=parseFloat(document.getElementById('b_ongkir').value)||0;
+  var total=t.kubik*hargaDeal+ongkir;
+  var diterima=parseFloat(document.getElementById('b_diterima').value)||0;
+  document.getElementById('b_kembalian').value=Math.max(0,diterima-total);
+}
+
+function hitungSisaBon(){
+  var t=STATE.selectedTiket; if(!t) return;
+  var hargaDeal=parseFloat(document.getElementById('b_hargaDeal').value)||t.hargaStandar;
+  var ongkir=parseFloat(document.getElementById('b_ongkir').value)||0;
+  var total=t.kubik*hargaDeal+ongkir;
+  var dp=parseFloat(document.getElementById('b_dp').value)||0;
+  var sisa=Math.max(0,total-dp);
+  document.getElementById('sisaBonInfo').innerHTML=
+    'Total: <strong>'+fRp(total)+'</strong> | DP: <strong>'+fRp(dp)+'</strong><br>'+
+    'Sisa piutang: <strong style="color:#991B1B">'+fRp(sisa)+'</strong>';
+}
+
+function batalBayar(){
+  STATE.selectedTiket=null;
+  document.getElementById('kasirQueueCard').style.display='block';
+  document.getElementById('bayarCard').style.display='none';
+  document.getElementById('strukArea').style.display='none';
+}
+
+function prosesLunas(){
+  var t=STATE.selectedTiket; if(!t) return;
+  var metode=document.getElementById('b_metode').value;
+  var hargaDeal=parseFloat(document.getElementById('b_hargaDeal').value)||t.hargaStandar;
+  var ongkir=parseFloat(document.getElementById('b_ongkir').value)||0;
+  var isBon=metode==='Belum Bayar';
+  var isSebagian=metode==='Belum Lunas';
+  var diterima=isBon?0:isSebagian?(parseFloat(document.getElementById('b_dp').value)||0):(parseFloat(document.getElementById('b_diterima').value)||0);
+  var pin=document.getElementById('b_pin')?document.getElementById('b_pin').value:'';
+  if(!metode){ showAlert('bayarAlert','error','Pilih metode bayar!'); return; }
+  if(!isBon&&!isSebagian&&!diterima){ showAlert('bayarAlert','error','Masukkan uang yang diterima!'); return; }
+  showAlert('bayarAlert','info','⏳ Menyimpan transaksi...');
+  api('finalizeCashierPayment',{rowNum:t.row,hargaStandar:t.hargaStandar,hargaDeal:hargaDeal,kubik:t.kubik,ongkir:ongkir,uangDiterima:diterima,metodeBayar:metode,kasir:STATE.user.nama,keterangan:document.getElementById('b_ket').value,pinOwner:pin},function(res){
+    if(res.ok){
+      STATE.selectedTiket=null;
+      tampilStruk(res.struk);
+      setTimeout(function(){ api('getCashierQueue',{},renderKasirQueue); },1500);
+    } else if(res.butuhPin){
+      showAlert('bayarAlert','error','🔒 '+res.pesan);
+      document.getElementById('pinOwnerBox').style.display='block';
+    } else showAlert('bayarAlert','error','❌ '+res.pesan);
+  });
+}
+
+function tampilStruk(s){
+  document.getElementById('bayarCard').style.display='none';
+  document.getElementById('strukArea').style.display='block';
+  document.getElementById('strukBox').innerHTML=
+    '<div class="str-header"><h3>PABRIK PENGGILINGAN KORAL</h3><p>CV Mulya Batu Coral</p></div>'+
+    '<div>No. Seri  : <strong>'+s.noSeri+'</strong></div>'+
+    '<div>Tanggal   : '+s.tanggal+'  '+s.waktu+'</div>'+
+    '<div>Kasir     : '+s.kasir+'</div>'+
+    '<div>Pelanggan : '+s.pelanggan+'</div>'+
+    '<div>No. Truk  : '+s.noPlat+'</div>'+
+    '<div>Loader    : '+s.loader+'</div>'+
+    '<hr style="border:none;border-top:1px dashed #94A3B8;margin:10px 0">'+
+    '<div>'+s.produk+'</div>'+
+    '<div class="strukRow"><span>'+s.kubik+' m³ × '+fRp(s.hargaDeal)+'</span><span>'+fRp(s.subtotal)+'</span></div>'+
+    (s.diskon>0?'<div style="color:#D97706;font-size:12px">*Korting: '+fRp(s.diskon)+'/m³ (-'+fRp(s.diskon*s.kubik)+')</div>':'')+
+    (s.ongkir>0?'<div class="strukRow"><span>Ongkos Kirim</span><span>'+fRp(s.ongkir)+'</span></div>':'')+
+    '<hr style="border:none;border-top:1px dashed #94A3B8;margin:10px 0">'+
+    '<div class="strukRow strukTotal"><span>TOTAL TAGIHAN</span><span>'+fRp(s.total)+'</span></div>'+
+    (s.diterima>0?'<div class="strukRow"><span>TUNAI DITERIMA</span><span>'+fRp(s.diterima)+'</span></div>':'')+
+    (s.kembalian>0?'<div class="strukRow"><span>KEMBALIAN</span><span>'+fRp(s.kembalian)+'</span></div>':'')+
+    (s.sisaPiutang>0?'<div class="strukRow" style="color:#6B21A8"><span>⚠️ PIUTANG/BON</span><span>'+fRp(s.sisaPiutang)+'</span></div>':'')+
+    '<div>STATUS: <strong>'+s.status+'</strong> ('+s.metodeBayar+')</div>'+
+    '<div class="str-footer"><p>Terima kasih</p><p style="font-size:10px">'+s.noSeri+'</p></div>';
+  window.scrollTo(0,0);
+}
+
+function tutupStruk(){
+  document.getElementById('strukArea').style.display='none';
+  document.getElementById('kasirQueueCard').style.display='block';
+}
+
+function submitPemasukan(){
+  var jenis=document.getElementById('pm_jenis').value;
+  var nominal=parseFloat(document.getElementById('pm_nominal').value);
+  var metode=document.getElementById('pm_metode').value;
+  var ket=document.getElementById('pm_ket').value;
+  if(!jenis||!nominal){ showAlert('pemasukanAlert','error','Jenis dan nominal wajib diisi!'); return; }
+  showAlert('pemasukanAlert','info','⏳ Menyimpan...');
+  api('submitPemasukanLain',{jenis:jenis,nominal:nominal,metodeBayar:metode,statusBayar:'Lunas',keterangan:ket},function(res){
+    if(res.ok){ showAlert('pemasukanAlert','success','✅ Pemasukan: '+res.noSeri); document.getElementById('pm_nominal').value=''; document.getElementById('pm_ket').value=''; }
+    else showAlert('pemasukanAlert','error','❌ '+res.pesan);
+  });
+}
+
+function submitPengeluaran(){
+  var jenis=document.getElementById('pe_jenis').value;
+  var total=parseFloat(document.getElementById('pe_total').value);
+  var status=document.getElementById('pe_status').value;
+  var ket=document.getElementById('pe_ket').value;
+  if(!jenis||!total){ showAlert('pengeluaranAlert','error','Kategori dan Total wajib diisi!'); return; }
+  showAlert('pengeluaranAlert','info','⏳ Menyimpan...');
+  api('submitPengeluaranLain',{jenis:jenis,total:total,status:status,siapa:STATE.user.nama,keterangan:ket},function(res){
+    if(res.ok){ showAlert('pengeluaranAlert','success','✅ Pengeluaran: '+res.noSeri); document.getElementById('pe_total').value=''; document.getElementById('pe_ket').value=''; }
+    else showAlert('pengeluaranAlert','error','❌ '+res.pesan);
+  });
+}
+
+function loadTutupKasir(){
+  showAlert('tutupAlert','info','⏳ Memuat data hari ini...');
+  api('getTutupKasirData',{tanggal:nowDateStr()},function(res){
+    if(res.ok){
+      STATE.tutupData=res.data;
+      document.getElementById('tutupSummary').innerHTML=
+        '<strong>Tanggal:</strong> '+res.data.tanggal+'<br>'+
+        '💰 Pemasukan Cash: <strong>'+fRp(res.data.pemasukanCash)+'</strong><br>'+
+        '📤 Pengeluaran: <strong>'+fRp(res.data.pengeluaranKas)+'</strong><br>'+
+        '📊 Saldo Harapan: <strong style="color:#1E40AF">'+fRp(res.data.saldoHarapan)+'</strong>';
+      showAlert('tutupAlert','success','✅ Data dimuat.');
+    } else showAlert('tutupAlert','error','❌ '+res.pesan);
+  });
+}
+
+function hitungFisik(){
+  var l100=parseFloat(document.getElementById('tk_100').value)||0;
+  var l50=parseFloat(document.getElementById('tk_50').value)||0;
+  var pec=parseFloat(document.getElementById('tk_pecahan').value)||0;
+  document.getElementById('tk_totalFisik').value=l100*100000+l50*50000+pec;
+}
+
+function submitTutupKasir(){
+  if(!STATE.tutupData){ showAlert('tutupAlert','error','Muat data hari ini dulu!'); return; }
+  showAlert('tutupAlert','info','⏳ Menyimpan...');
+  api('simpanTutupKasir',{
+    tanggal:STATE.tutupData.tanggal,kasir:STATE.user.nama,
+    pemasukanCash:STATE.tutupData.pemasukanCash,
+    pengeluaranKas:STATE.tutupData.pengeluaranKas,
+    saldoHarapan:STATE.tutupData.saldoHarapan,
+    lembar100:document.getElementById('tk_100').value,
+    lembar50:document.getElementById('tk_50').value,
+    pecahan:document.getElementById('tk_pecahan').value,
+    setorDropSafe:document.getElementById('tk_dropSafe').value,
+    keterangan:document.getElementById('tk_ket').value
+  },function(res){
+    if(res.ok){
+      showAlert('tutupAlert','success','🔒 '+res.status+' | Selisih: '+fRp(res.selisih));
+      ['tk_100','tk_50','tk_pecahan','tk_dropSafe','tk_totalFisik'].forEach(function(id){ document.getElementById(id).value=0; });
+      document.getElementById('tk_ket').value='';
+      STATE.tutupData=null;
+      document.getElementById('tutupSummary').innerHTML='✅ Tutup kasir berhasil disimpan.';
+    } else showAlert('tutupAlert','error','❌ '+res.pesan);
+  });
+}
+
+function updateQris(){
+  var noSeri=document.getElementById('qris_noSeri').value.trim();
+  if(!noSeri){ alert('Masukkan No Seri!'); return; }
+  api('updateQrisPending',{noSeri:noSeri,metodeBaru:'QRIS'},function(res){
+    alert(res.ok?'✅ '+res.pesan:'❌ '+res.pesan);
+    if(res.ok) document.getElementById('qris_noSeri').value='';
+  });
+}
+
+function loadPiutang(){
+  document.getElementById('piutangList').innerHTML='<div class="loading"><div class="spinner"></div><br>Memuat...</div>';
+  api('getPiutangList',{},function(res){
+    if(!res.ok){ document.getElementById('piutangList').innerHTML='<p style="color:#EF4444;padding:12px">❌ '+res.pesan+'</p>'; return; }
+    var list=res.data;
+    if(!list.length){ document.getElementById('piutangList').innerHTML='<p style="text-align:center;color:#64748B;padding:20px">✅ Tidak ada piutang outstanding.</p>'; return; }
+    var html='';
+    list.forEach(function(p){
+      html+='<div class="tiketItem">'+
+        '<div class="tiketHeader"><span class="tiketNoSeri">'+p.noSeri+'</span><span class="badge badgeLate">'+p.metodeBayar+'</span></div>'+
+        '<div class="tiketBody">'+
+        '<div class="tiketRow">📅 '+p.tanggal+'</div>'+
+        '<div class="tiketRow">👤 <strong>'+p.pelanggan+'</strong></div>'+
+        '<div class="tiketRow">📦 '+p.produk+' '+p.kubik+' m³</div>'+
+        '<div class="tiketRow" style="color:#EF4444">⚠️ Sisa: <strong>'+fRp(p.sisaPiutang)+'</strong></div>'+
+        '</div>'+
+        '<div class="tiketActions">'+
+        '<input type="number" id="lns_'+p.row+'" placeholder="Jumlah bayar" style="flex:1;padding:6px;border:1.5px solid #FCD34D;border-radius:6px;background:#FEFCE8">'+
+        '<select id="met_'+p.row+'" style="padding:6px;border:1.5px solid #E2E8F0;border-radius:6px">'+
+        '<option value="Cash">Cash</option>'+
+        '<option value="TF - Rek. CV (Utama)">TF CV</option>'+
+        '<option value="QRIS">QRIS</option>'+
+        '</select>'+
+        '<button class="btn btnSuccess" onclick="lunasPiutang('+p.row+')">✅ Catat</button>'+
+        '</div></div>';
+    });
+    document.getElementById('piutangList').innerHTML=html;
+  });
+}
+
+function lunasPiutang(rowNum){
+  var jumlah=parseFloat(document.getElementById('lns_'+rowNum).value);
+  var metode=document.getElementById('met_'+rowNum).value;
+  if(!jumlah){ alert('Masukkan jumlah!'); return; }
+  api('lunasPiutang',{rowNum:rowNum,jumlahBayar:jumlah,metode:metode,kasir:STATE.user.nama},function(res){
+    alert(res.ok?(res.isLunas?'✅ LUNAS PENUH!':'✅ Cicilan dicatat. Sisa: '+fRp(res.sisaBaru)):'❌ '+res.pesan);
+    if(res.ok) loadPiutang();
+  });
+}
+
+function loadDashboard(){
+  document.getElementById('kpiGrid').innerHTML='<div class="loading" style="grid-column:span 2"><div class="spinner"></div><br>Memuat...</div>';
+  api('getDashboardRingkas',{},function(res){
+    if(!res.ok) return;
+    document.getElementById('kpiGrid').innerHTML=
+      '<div class="kpiCard green"><div class="val">'+fRp(res.omsetHari)+'</div><div class="lbl">Omset Hari Ini ('+res.txHari+' trx)</div></div>'+
+      '<div class="kpiCard red"><div class="val">'+fRp(res.keluarHari)+'</div><div class="lbl">Pengeluaran</div></div>'+
+      '<div class="kpiCard '+(res.kasHari>=0?'blue':'red')+'"><div class="val">'+fRp(res.kasHari)+'</div><div class="lbl">Kas Bersih</div></div>'+
+      '<div class="kpiCard red"><div class="val">'+fRp(res.piutangTotal)+'</div><div class="lbl">Total Piutang</div></div>';
+  });
+}
+</script>
+</body>
+</html>
