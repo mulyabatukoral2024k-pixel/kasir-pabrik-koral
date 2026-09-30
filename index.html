@@ -10,7 +10,6 @@
 body{font-family:'Segoe UI',Arial,sans-serif;background:#F1F5F9;color:#1E293B;min-height:100vh;font-size:14px}
 button{cursor:pointer;font-family:inherit}
 input,select,textarea{font-family:inherit;font-size:14px}
-
 #loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,#0F172A 0%,#1E3A5F 100%)}
 .loginBox{background:#fff;border-radius:16px;padding:40px 32px;width:100%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
 .loginLogo{text-align:center;margin-bottom:24px}
@@ -19,100 +18,74 @@ input,select,textarea{font-family:inherit;font-size:14px}
 .loginLogo .icon{font-size:40px;margin-bottom:8px}
 .formGroup{margin-bottom:16px}
 .formGroup label{display:block;font-size:12px;font-weight:600;color:#64748B;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
-.formGroup input{width:100%;padding:10px 14px;border:1.5px solid #E2E8F0;border-radius:8px;font-size:14px;transition:border .2s}
+.formGroup input{width:100%;padding:10px 14px;border:1.5px solid #E2E8F0;border-radius:8px;font-size:14px}
 .formGroup input:focus{outline:none;border-color:#3B82F6}
 .btnLogin{width:100%;padding:12px;background:#1E3A5F;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600}
 .loginErr{color:#EF4444;font-size:13px;text-align:center;margin-top:12px;display:none}
-
 #appScreen{display:none;min-height:100vh;flex-direction:column}
 .topBar{background:#0F172A;color:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
 .topBar h2{font-size:15px;font-weight:600}
 .userInfo{font-size:12px;color:#94A3B8;text-align:right}
 .userInfo span{color:#38BDF8;font-weight:600}
 .btnLogout{background:none;border:1px solid #475569;color:#94A3B8;padding:4px 10px;border-radius:6px;font-size:12px;cursor:pointer}
-.btnLogout:hover{border-color:#EF4444;color:#EF4444}
-
 .tabBar{background:#fff;display:flex;border-bottom:2px solid #E2E8F0;overflow-x:auto;position:sticky;top:49px;z-index:99}
-.tabBtn{padding:12px 18px;border:none;background:none;color:#64748B;font-size:13px;font-weight:500;white-space:nowrap;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;cursor:pointer}
+.tabBtn{padding:12px 18px;border:none;background:none;color:#64748B;font-size:13px;font-weight:500;white-space:nowrap;border-bottom:3px solid transparent;margin-bottom:-2px;cursor:pointer}
 .tabBtn.active{color:#2563EB;border-bottom-color:#2563EB;font-weight:700}
-
 .tabContent{display:none;padding:16px;max-width:700px;margin:0 auto;width:100%}
 .tabContent.active{display:block}
-
 .card{background:#fff;border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-.card h3{font-size:14px;font-weight:700;color:#0F172A;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-
+.card h3{font-size:14px;font-weight:700;color:#0F172A;margin-bottom:16px}
 .fRow{margin-bottom:14px}
 .fRow label{display:block;font-size:12px;font-weight:600;color:#64748B;margin-bottom:5px;text-transform:uppercase;letter-spacing:.4px}
-.fRow input,.fRow select,.fRow textarea{width:100%;padding:9px 12px;border:1.5px solid #E2E8F0;border-radius:8px;font-size:14px;transition:border .2s;background:#fff}
+.fRow input,.fRow select{width:100%;padding:9px 12px;border:1.5px solid #E2E8F0;border-radius:8px;font-size:14px;background:#fff}
 .fRow input:focus,.fRow select:focus{outline:none;border-color:#3B82F6;background:#F0F9FF}
 .fRow.yellow input,.fRow.yellow select{background:#FEFCE8;border-color:#FCD34D}
 .fRow2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-
-.btn{padding:10px 20px;border:none;border-radius:8px;font-size:14px;font-weight:600;transition:all .2s;display:inline-flex;align-items:center;justify-content:center;gap:6px;cursor:pointer}
+.btn{padding:10px 20px;border:none;border-radius:8px;font-size:14px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:6px;cursor:pointer}
 .btnPrimary{background:#1E3A5F;color:#fff}
-.btnPrimary:hover{background:#2563EB}
 .btnSuccess{background:#065F46;color:#fff}
-.btnSuccess:hover{background:#059669}
 .btnWarning{background:#92400E;color:#fff}
-.btnWarning:hover{background:#D97706}
 .btnDanger{background:#991B1B;color:#fff}
-.btnDanger:hover{background:#EF4444}
 .btnGray{background:#E2E8F0;color:#475569}
-.btnGray:hover{background:#CBD5E1}
 .btnFull{width:100%;padding:12px}
-
 .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
 .badgeWaiting{background:#FEF3C7;color:#92400E}
 .badgeValid{background:#D1FAE5;color:#065F46}
 .badgeLate{background:#FEE2E2;color:#991B1B}
-
 .tiketItem{border:1.5px solid #E2E8F0;border-radius:10px;padding:14px;margin-bottom:10px;background:#FAFAFA}
-.tiketItem:hover{border-color:#93C5FD;background:#F0F9FF}
 .tiketHeader{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .tiketNoSeri{font-size:12px;font-weight:700;color:#3B82F6;font-family:monospace}
 .tiketBody{display:grid;grid-template-columns:1fr 1fr;gap:4px 16px}
 .tiketRow{font-size:12px;color:#64748B}
 .tiketRow strong{color:#1E293B}
 .tiketActions{margin-top:12px;display:flex;gap:8px}
-
 .strukBox{background:#fff;border:2px dashed #CBD5E1;border-radius:10px;padding:20px;font-family:monospace;font-size:13px;line-height:1.8;max-width:340px;margin:0 auto}
 .str-header{text-align:center;border-bottom:1px dashed #94A3B8;padding-bottom:10px;margin-bottom:10px}
 .str-footer{text-align:center;border-top:1px dashed #94A3B8;padding-top:10px;margin-top:10px;font-size:11px;color:#64748B}
 .strukRow{display:flex;justify-content:space-between}
 .strukTotal{border-top:1px solid #1E293B;margin-top:6px;padding-top:6px;font-weight:700}
-
 .kpiGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
 .kpiCard{background:#fff;border-radius:12px;padding:16px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.06)}
 .kpiCard .val{font-size:16px;font-weight:700;color:#0F172A;margin-bottom:4px}
-.kpiCard .lbl{font-size:11px;color:#64748B;font-weight:500}
+.kpiCard .lbl{font-size:11px;color:#64748B}
 .kpiCard.green .val{color:#065F46}
 .kpiCard.red .val{color:#991B1B}
 .kpiCard.blue .val{color:#1E40AF}
-
 .alert{padding:12px 16px;border-radius:8px;margin-bottom:12px;font-size:13px;display:none}
 .alertSuccess{background:#D1FAE5;color:#065F46;border:1px solid #6EE7B7}
 .alertError{background:#FEE2E2;color:#991B1B;border:1px solid #FCA5A5}
 .alertInfo{background:#DBEAFE;color:#1E40AF;border:1px solid #93C5FD}
-
 .loading{text-align:center;padding:32px;color:#64748B}
 .spinner{display:inline-block;width:28px;height:28px;border:3px solid #E2E8F0;border-top-color:#3B82F6;border-radius:50%;animation:spin .8s linear infinite;margin-bottom:8px}
 @keyframes spin{to{transform:rotate(360deg)}}
-
 .summaryBox{background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:14px;margin-top:14px}
 .summaryRow{display:flex;justify-content:space-between;padding:4px 0;font-size:13px}
 .summaryRow.total{border-top:2px solid #1E293B;margin-top:6px;padding-top:8px;font-weight:700;font-size:15px}
-
-@media(max-width:480px){
-  .fRow2{grid-template-columns:1fr}
-  .tiketBody{grid-template-columns:1fr}
-  .loginBox{margin:16px;padding:28px 20px}
-}
+@media(max-width:480px){.fRow2{grid-template-columns:1fr}.tiketBody{grid-template-columns:1fr}.loginBox{margin:16px;padding:28px 20px}}
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
 <div id="loginScreen">
   <div class="loginBox">
     <div class="loginLogo">
@@ -133,7 +106,6 @@ input,select,textarea{font-family:inherit;font-size:14px}
   </div>
 </div>
 
-<!-- APP -->
 <div id="appScreen">
   <div class="topBar">
     <h2>⛏️ Kasir Pabrik Koral</h2>
@@ -147,34 +119,23 @@ input,select,textarea{font-family:inherit;font-size:14px}
   </div>
   <div class="tabBar" id="tabBar"></div>
 
-  <!-- TAB LOADER -->
   <div class="tabContent" id="tab-loader">
     <div class="card">
       <h3>🚜 Input Tiket Muatan</h3>
       <div class="alert alertSuccess" id="loaderAlert"></div>
-      <div class="fRow yellow"><label>No Plat Truk *</label>
-        <input type="text" id="l_noPlat" placeholder="AG 1234 AB" style="text-transform:uppercase"></div>
-      <div class="fRow yellow"><label>Pelanggan *</label>
-        <select id="l_pelanggan"><option value="">-- Pilih Pelanggan --</option></select></div>
-      <div class="fRow yellow"><label>Produk *</label>
-        <select id="l_produk"><option value="">-- Pilih Produk --</option></select></div>
+      <div class="fRow yellow"><label>No Plat Truk *</label><input type="text" id="l_noPlat" placeholder="AG 1234 AB" style="text-transform:uppercase"></div>
+      <div class="fRow yellow"><label>Pelanggan *</label><select id="l_pelanggan"><option value="">-- Pilih Pelanggan --</option></select></div>
+      <div class="fRow yellow"><label>Produk *</label><select id="l_produk"><option value="">-- Pilih Produk --</option></select></div>
       <div class="fRow2">
-        <div class="fRow yellow"><label>Kubik (m³) *</label>
-          <input type="number" id="l_kubik" placeholder="6.5" step="0.1" min="0"></div>
-        <div class="fRow yellow"><label>Kondisi Muatan</label>
-          <select id="l_kondisi">
-            <option>Peres</option><option>Munjung Sedang</option><option>Munjung Tinggi</option>
-          </select></div>
+        <div class="fRow yellow"><label>Kubik (m³) *</label><input type="number" id="l_kubik" placeholder="6.5" step="0.1" min="0"></div>
+        <div class="fRow yellow"><label>Kondisi Muatan</label><select id="l_kondisi"><option>Peres</option><option>Munjung Sedang</option><option>Munjung Tinggi</option></select></div>
       </div>
-      <div class="fRow"><label>Operator Loader</label>
-        <select id="l_loader"><option value="">-- Nama Loader --</option></select></div>
-      <div class="fRow"><label>Keterangan</label>
-        <input type="text" id="l_ket" placeholder="Catatan tambahan"></div>
+      <div class="fRow"><label>Operator Loader</label><select id="l_loader"><option value="">-- Nama Loader --</option></select></div>
+      <div class="fRow"><label>Keterangan</label><input type="text" id="l_ket" placeholder="Catatan tambahan"></div>
       <button class="btn btnPrimary btnFull" onclick="submitLoader()">📋 Buat Tiket</button>
     </div>
   </div>
 
-  <!-- TAB CHECKER -->
   <div class="tabContent" id="tab-checker">
     <div class="card">
       <h3>✅ Antrean Tiket</h3>
@@ -185,35 +146,25 @@ input,select,textarea{font-family:inherit;font-size:14px}
     <div class="card">
       <h3>🪨 Input Grosok Masuk</h3>
       <div class="alert alertSuccess" id="grosokAlert"></div>
-      <div class="fRow yellow"><label>Supplier *</label>
-        <select id="g_supplier"><option value="">-- Pilih Supplier --</option></select></div>
-      <div class="fRow yellow"><label>Jenis Grosok *</label>
-        <select id="g_jenis"><option value="">-- Pilih Jenis --</option></select></div>
+      <div class="fRow yellow"><label>Supplier *</label><select id="g_supplier"><option value="">-- Pilih Supplier --</option></select></div>
+      <div class="fRow yellow"><label>Jenis Grosok *</label><select id="g_jenis"><option value="">-- Pilih Jenis --</option></select></div>
       <div class="fRow2">
-        <div class="fRow yellow"><label>Jumlah Rit *</label>
-          <input type="number" id="g_rit" value="1" min="1"></div>
-        <div class="fRow"><label>Target Mesin</label>
-          <select id="g_mesin"><option>Jaw Crusher</option><option>Hammermill</option></select></div>
+        <div class="fRow yellow"><label>Jumlah Rit *</label><input type="number" id="g_rit" value="1" min="1"></div>
+        <div class="fRow"><label>Target Mesin</label><select id="g_mesin"><option>Jaw Crusher</option><option>Hammermill</option></select></div>
       </div>
       <div class="fRow2">
-        <div class="fRow"><label>No Plat Truk</label>
-          <input type="text" id="g_plat" placeholder="AG 1234 AB" style="text-transform:uppercase"></div>
-        <div class="fRow"><label>No Surat Jalan</label>
-          <input type="text" id="g_sj" placeholder="SJ-001"></div>
+        <div class="fRow"><label>No Plat Truk</label><input type="text" id="g_plat" placeholder="AG 1234 AB" style="text-transform:uppercase"></div>
+        <div class="fRow"><label>No Surat Jalan</label><input type="text" id="g_sj" placeholder="SJ-001"></div>
       </div>
       <div class="fRow2">
-        <div class="fRow"><label>Status Bayar</label>
-          <select id="g_status"><option>Belum Lunas</option><option>Lunas</option></select></div>
-        <div class="fRow"><label>Kondisi Grosok</label>
-          <select id="g_kondisi"><option>Normal</option><option>Lengket/Linet</option><option>Ada Batu Oversize</option></select></div>
+        <div class="fRow"><label>Status Bayar</label><select id="g_status"><option>Belum Lunas</option><option>Lunas</option></select></div>
+        <div class="fRow"><label>Kondisi Grosok</label><select id="g_kondisi"><option>Normal</option><option>Lengket/Linet</option><option>Ada Batu Oversize</option></select></div>
       </div>
-      <div class="fRow"><label>Keterangan</label>
-        <input type="text" id="g_ket" placeholder="Catatan"></div>
+      <div class="fRow"><label>Keterangan</label><input type="text" id="g_ket" placeholder="Catatan"></div>
       <button class="btn btnWarning btnFull" onclick="submitGrosok()">🪨 Simpan Grosok</button>
     </div>
   </div>
 
-  <!-- TAB KASIR -->
   <div class="tabContent" id="tab-kasir">
     <div class="card" id="kasirQueueCard">
       <h3>🎫 Tiket Siap Diproses</h3>
@@ -226,10 +177,8 @@ input,select,textarea{font-family:inherit;font-size:14px}
       <div class="alert alertSuccess" id="bayarAlert"></div>
       <div id="bayarInfo" style="background:#F8FAFC;border-radius:8px;padding:12px;margin-bottom:14px;font-size:13px;line-height:1.8"></div>
       <div class="fRow2">
-        <div class="fRow yellow"><label>Harga Deal /m³ (Rp)</label>
-          <input type="number" id="b_hargaDeal" oninput="hitungTotal()"></div>
-        <div class="fRow"><label>Ongkos Kirim (Rp)</label>
-          <input type="number" id="b_ongkir" value="0" oninput="hitungTotal()"></div>
+        <div class="fRow yellow"><label>Harga Deal /m³ (Rp)</label><input type="number" id="b_hargaDeal" oninput="hitungTotal()"></div>
+        <div class="fRow"><label>Ongkos Kirim (Rp)</label><input type="number" id="b_ongkir" value="0" oninput="hitungTotal()"></div>
       </div>
       <div class="summaryBox" id="bayarSummary"></div>
       <div class="fRow yellow" style="margin-top:14px"><label>Metode Bayar *</label>
@@ -244,31 +193,27 @@ input,select,textarea{font-family:inherit;font-size:14px}
           <option value="Belum Bayar">Belum Bayar (BON penuh)</option>
           <option value="Belum Lunas">Belum Lunas (bayar sebagian)</option>
           <option value="Drop Safe">Drop Safe</option>
-        </select></div>
+        </select>
+      </div>
       <div id="bayarTunaiBox">
         <div class="fRow2">
-          <div class="fRow yellow"><label>Uang Diterima (Rp)</label>
-            <input type="number" id="b_diterima" placeholder="0" oninput="hitungKembalian()"></div>
-          <div class="fRow"><label>Kembalian (Rp)</label>
-            <input type="number" id="b_kembalian" readonly style="background:#F1F5F9;color:#065F46;font-weight:700"></div>
+          <div class="fRow yellow"><label>Uang Diterima (Rp)</label><input type="number" id="b_diterima" placeholder="0" oninput="hitungKembalian()"></div>
+          <div class="fRow"><label>Kembalian (Rp)</label><input type="number" id="b_kembalian" readonly style="background:#F1F5F9;color:#065F46;font-weight:700"></div>
         </div>
       </div>
       <div id="bayarSebagianBox" style="display:none">
-        <div class="fRow yellow"><label>Bayar Sebagian / DP (Rp)</label>
-          <input type="number" id="b_dp" placeholder="0" oninput="hitungSisaBon()"></div>
+        <div class="fRow yellow"><label>Bayar Sebagian / DP (Rp)</label><input type="number" id="b_dp" placeholder="0" oninput="hitungSisaBon()"></div>
         <div id="sisaBonInfo" style="background:#F3E8FF;border-radius:8px;padding:10px;font-size:13px;color:#6B21A8;margin-bottom:10px"></div>
       </div>
       <div id="bonPenuhBox" style="display:none">
         <div style="background:#F3E8FF;border-radius:8px;padding:12px;font-size:13px;color:#6B21A8;margin-bottom:10px">
-          ⚠️ Seluruh tagihan dicatat sebagai <strong>Piutang / BON</strong>. Tidak ada uang diterima.
+          ⚠️ Seluruh tagihan dicatat sebagai <strong>Piutang / BON</strong>.
         </div>
       </div>
       <div id="pinOwnerBox" style="display:none">
-        <div class="fRow"><label>🔒 PIN Owner (diskon lebih dari Rp 10.000/m³)</label>
-          <input type="password" id="b_pin" placeholder="PIN Owner"></div>
+        <div class="fRow"><label>🔒 PIN Owner</label><input type="password" id="b_pin" placeholder="PIN Owner"></div>
       </div>
-      <div class="fRow"><label>Keterangan</label>
-        <input type="text" id="b_ket" placeholder="Opsional"></div>
+      <div class="fRow"><label>Keterangan</label><input type="text" id="b_ket" placeholder="Opsional"></div>
       <div style="display:flex;gap:8px">
         <button class="btn btnGray" onclick="batalBayar()">✖ Batal</button>
         <button class="btn btnSuccess btnFull" onclick="prosesLunas()">✅ SIMPAN & CETAK STRUK</button>
@@ -288,75 +233,52 @@ input,select,textarea{font-family:inherit;font-size:14px}
       <h3>💳 Input Pemasukan Lain</h3>
       <div class="alert alertSuccess" id="pemasukanAlert"></div>
       <div class="fRow yellow"><label>Jenis Pemasukan *</label>
-        <select id="pm_jenis">
-          <option value="">-- Pilih --</option>
-          <option>Penyewaan Alat Berat</option>
-          <option>Penyewaan Truk</option>
-          <option>Ongkos Kirim</option>
-          <option>DLL</option>
-        </select></div>
-      <div class="fRow2">
-        <div class="fRow yellow"><label>Nominal (Rp) *</label>
-          <input type="number" id="pm_nominal" placeholder="0"></div>
-        <div class="fRow"><label>Metode Bayar</label>
-          <select id="pm_metode">
-            <option value="Cash">Cash</option>
-            <option value="TF - Rek. CV (Utama)">TF - Rek. CV</option>
-            <option value="QRIS">QRIS</option>
-          </select></div>
+        <select id="pm_jenis"><option value="">-- Pilih --</option><option>Penyewaan Alat Berat</option><option>Penyewaan Truk</option><option>Ongkos Kirim</option><option>DLL</option></select>
       </div>
-      <div class="fRow"><label>Keterangan</label>
-        <input type="text" id="pm_ket" placeholder="Detail pemasukan"></div>
+      <div class="fRow2">
+        <div class="fRow yellow"><label>Nominal (Rp) *</label><input type="number" id="pm_nominal" placeholder="0"></div>
+        <div class="fRow"><label>Metode Bayar</label>
+          <select id="pm_metode"><option value="Cash">Cash</option><option value="TF - Rek. CV (Utama)">TF - Rek. CV</option><option value="QRIS">QRIS</option></select>
+        </div>
+      </div>
+      <div class="fRow"><label>Keterangan</label><input type="text" id="pm_ket" placeholder="Detail pemasukan"></div>
       <button class="btn btnSuccess btnFull" onclick="submitPemasukan()">💳 Simpan Pemasukan</button>
     </div>
     <div class="card">
       <h3>📤 Input Pengeluaran</h3>
       <div class="alert alertSuccess" id="pengeluaranAlert"></div>
-      <div class="fRow yellow"><label>Kategori *</label>
-        <select id="pe_jenis"><option value="">-- Pilih Kategori --</option></select></div>
+      <div class="fRow yellow"><label>Kategori *</label><select id="pe_jenis"><option value="">-- Pilih Kategori --</option></select></div>
       <div class="fRow2">
-        <div class="fRow yellow"><label>Total (Rp) *</label>
-          <input type="number" id="pe_total" placeholder="0"></div>
-        <div class="fRow"><label>Status</label>
-          <select id="pe_status"><option>Lunas</option><option>Belum Lunas</option></select></div>
+        <div class="fRow yellow"><label>Total (Rp) *</label><input type="number" id="pe_total" placeholder="0"></div>
+        <div class="fRow"><label>Status</label><select id="pe_status"><option>Lunas</option><option>Belum Lunas</option></select></div>
       </div>
-      <div class="fRow"><label>Keterangan / Nama Penerima</label>
-        <input type="text" id="pe_ket" placeholder="Contoh: Beli solar loader"></div>
+      <div class="fRow"><label>Keterangan</label><input type="text" id="pe_ket" placeholder="Contoh: Beli solar loader"></div>
       <button class="btn btnWarning btnFull" onclick="submitPengeluaran()">📤 Simpan Pengeluaran</button>
     </div>
     <div class="card">
       <h3>🔒 Tutup Kasir Harian</h3>
       <div class="alert alertSuccess" id="tutupAlert"></div>
-      <div id="tutupSummary" style="background:#F8FAFC;border-radius:8px;padding:12px;margin-bottom:14px;font-size:13px;color:#64748B">
-        Klik tombol di bawah untuk memuat data hari ini.</div>
+      <div id="tutupSummary" style="background:#F8FAFC;border-radius:8px;padding:12px;margin-bottom:14px;font-size:13px;color:#64748B">Klik tombol di bawah untuk memuat data hari ini.</div>
       <button class="btn btnGray" style="margin-bottom:14px" onclick="loadTutupKasir()">📊 Muat Data Hari Ini</button>
       <div class="fRow2">
-        <div class="fRow yellow"><label>Lembar Rp 100.000</label>
-          <input type="number" id="tk_100" value="0" min="0" oninput="hitungFisik()"></div>
-        <div class="fRow yellow"><label>Lembar Rp 50.000</label>
-          <input type="number" id="tk_50" value="0" min="0" oninput="hitungFisik()"></div>
+        <div class="fRow yellow"><label>Lembar Rp 100.000</label><input type="number" id="tk_100" value="0" min="0" oninput="hitungFisik()"></div>
+        <div class="fRow yellow"><label>Lembar Rp 50.000</label><input type="number" id="tk_50" value="0" min="0" oninput="hitungFisik()"></div>
       </div>
       <div class="fRow2">
-        <div class="fRow yellow"><label>Uang Pecahan Kecil (Rp)</label>
-          <input type="number" id="tk_pecahan" value="0" min="0" oninput="hitungFisik()"></div>
-        <div class="fRow"><label>Total Uang Fisik (Rp)</label>
-          <input type="number" id="tk_totalFisik" readonly style="background:#DBEAFE;font-weight:700;color:#1E40AF"></div>
+        <div class="fRow yellow"><label>Uang Pecahan Kecil (Rp)</label><input type="number" id="tk_pecahan" value="0" min="0" oninput="hitungFisik()"></div>
+        <div class="fRow"><label>Total Uang Fisik (Rp)</label><input type="number" id="tk_totalFisik" readonly style="background:#DBEAFE;font-weight:700;color:#1E40AF"></div>
       </div>
-      <div class="fRow yellow"><label>Setor Drop Safe (Rp)</label>
-        <input type="number" id="tk_dropSafe" value="0" min="0"></div>
-      <div class="fRow"><label>Keterangan (jika ada selisih)</label>
-        <input type="text" id="tk_ket" placeholder="Penjelasan selisih"></div>
+      <div class="fRow yellow"><label>Setor Drop Safe (Rp)</label><input type="number" id="tk_dropSafe" value="0" min="0"></div>
+      <div class="fRow"><label>Keterangan</label><input type="text" id="tk_ket" placeholder="Penjelasan selisih"></div>
       <button class="btn btnDanger btnFull" onclick="submitTutupKasir()">🔒 Tutup Kasir & Simpan</button>
     </div>
     <div class="card">
       <h3>📱 Update QRIS-Pending</h3>
-      <div class="fRow yellow"><label>No Seri Transaksi</label>
-        <input type="text" id="qris_noSeri" placeholder="PJ-202611-0001"></div>
+      <div class="fRow yellow"><label>No Seri Transaksi</label><input type="text" id="qris_noSeri" placeholder="PJ-202611-0001"></div>
       <button class="btn btnPrimary" onclick="updateQris()">✅ Update ke QRIS Lunas</button>
     </div>
   </div>
 
-  <!-- TAB PIUTANG -->
   <div class="tabContent" id="tab-piutang">
     <div class="card">
       <h3>📋 Daftar Piutang / BON Belum Lunas</h3>
@@ -365,7 +287,6 @@ input,select,textarea{font-family:inherit;font-size:14px}
     </div>
   </div>
 
-  <!-- TAB OWNER -->
   <div class="tabContent" id="tab-owner">
     <div class="kpiGrid" id="kpiGrid">
       <div class="loading" style="grid-column:span 2"><div class="spinner"></div><br>Memuat dashboard...</div>
@@ -394,18 +315,31 @@ function showAlert(id,type,msg){
   if(type==='success')setTimeout(function(){el.style.display='none';},4000);
 }
 
-function api(action,params,callback){
-  var url=SCRIPT_URL+'?action='+encodeURIComponent(action);
-  fetch(url,{
-    method:'POST',
-    headers:{'Content-Type':'text/plain'},
-    body:JSON.stringify(params||{})
-  })
-  .then(function(r){return r.json();})
-  .then(function(data){callback(data);})
-  .catch(function(e){callback({ok:false,pesan:'Network error: '+e.message});});
+// ── JSONP API — solusi CORS ──────────────────────────────────
+function api(action, params, callback) {
+  var cbName = 'cb_' + Date.now() + '_' + Math.random().toString(36).slice(2);
+  var url = SCRIPT_URL
+    + '?action=' + encodeURIComponent(action)
+    + '&data='   + encodeURIComponent(JSON.stringify(params||{}))
+    + '&callback=' + cbName;
+
+  window[cbName] = function(data) {
+    try { delete window[cbName]; } catch(e){}
+    try { document.body.removeChild(script); } catch(e){}
+    callback(data);
+  };
+
+  var script = document.createElement('script');
+  script.src = url;
+  script.onerror = function() {
+    try { delete window[cbName]; } catch(e){}
+    try { document.body.removeChild(script); } catch(e){}
+    callback({ ok:false, pesan:'Gagal terhubung ke server. Cek koneksi internet.' });
+  };
+  document.body.appendChild(script);
 }
 
+// ── LOGIN ────────────────────────────────────────────────────
 document.getElementById('loginPass').addEventListener('keypress',function(e){
   if(e.key==='Enter')doLogin();
 });
@@ -454,10 +388,7 @@ function buildTabs(role){
   var tabs=[];
   if(['loader','owner','direktur'].indexOf(role)>-1)tabs.push({id:'loader',label:'🚜 Loader'});
   if(['checker','owner','direktur'].indexOf(role)>-1)tabs.push({id:'checker',label:'✅ Checker'});
-  if(['kasir','owner','direktur'].indexOf(role)>-1){
-    tabs.push({id:'kasir',label:'💰 Kasir'});
-    tabs.push({id:'piutang',label:'📋 Piutang'});
-  }
+  if(['kasir','owner','direktur'].indexOf(role)>-1){tabs.push({id:'kasir',label:'💰 Kasir'});tabs.push({id:'piutang',label:'📋 Piutang'});}
   if(['owner','direktur'].indexOf(role)>-1)tabs.push({id:'owner',label:'📊 Owner'});
   var bar=document.getElementById('tabBar');bar.innerHTML='';
   tabs.forEach(function(t,i){
@@ -468,9 +399,9 @@ function buildTabs(role){
     bar.appendChild(btn);
   });
   if(tabs.length>0)showTab(tabs[0].id);
-  if(['checker','owner','direktur'].indexOf(role)>-1)setTimeout(loadCheckerQueue,600);
-  if(['kasir','owner','direktur'].indexOf(role)>-1)setTimeout(loadCashierQueue,600);
-  if(['owner','direktur'].indexOf(role)>-1)setTimeout(loadDashboard,700);
+  if(['checker','owner','direktur'].indexOf(role)>-1)setTimeout(loadCheckerQueue,800);
+  if(['kasir','owner','direktur'].indexOf(role)>-1)setTimeout(loadCashierQueue,800);
+  if(['owner','direktur'].indexOf(role)>-1)setTimeout(loadDashboard,900);
 }
 
 function switchTab(id,btn){
@@ -507,8 +438,7 @@ function fillSelect(id,items,placeholder){
   var el=document.getElementById(id);if(!el)return;
   el.innerHTML='<option value="">'+placeholder+'</option>';
   items.forEach(function(item){
-    var opt=document.createElement('option');
-    opt.value=item.val;opt.textContent=item.label;el.appendChild(opt);
+    var opt=document.createElement('option');opt.value=item.val;opt.textContent=item.label;el.appendChild(opt);
   });
 }
 
@@ -525,11 +455,8 @@ function submitLoader(){
   api('submitLoaderTicket',{noPlat:noPlat,pelanggan:pelanggan,produk:produk,kubik:kubik,kondisiMuatan:kondisi,loader:loader,keterangan:ket},function(res){
     if(res.ok){
       showAlert('loaderAlert','success','✅ Tiket: '+res.noSeri);
-      document.getElementById('l_noPlat').value='';
-      document.getElementById('l_pelanggan').value='';
-      document.getElementById('l_produk').value='';
-      document.getElementById('l_kubik').value='';
-      document.getElementById('l_ket').value='';
+      document.getElementById('l_noPlat').value='';document.getElementById('l_pelanggan').value='';
+      document.getElementById('l_produk').value='';document.getElementById('l_kubik').value='';document.getElementById('l_ket').value='';
     }else showAlert('loaderAlert','error','❌ '+res.pesan);
   });
 }
@@ -542,20 +469,12 @@ function loadCheckerQueue(){
     if(!q.length){document.getElementById('checkerQueue').innerHTML='<p style="text-align:center;color:#64748B;padding:20px">✅ Tidak ada tiket menunggu.</p>';return;}
     var html='';
     q.forEach(function(t){
-      html+='<div class="tiketItem">'+
-        '<div class="tiketHeader"><span class="tiketNoSeri">'+t.noSeri+'</span><span class="badge badgeWaiting">Menunggu</span></div>'+
-        '<div class="tiketBody">'+
-        '<div class="tiketRow">🚛 <strong>'+t.noPlat+'</strong></div>'+
-        '<div class="tiketRow">👤 <strong>'+t.pelanggan+'</strong></div>'+
-        '<div class="tiketRow">📦 '+t.produk+'</div>'+
-        '<div class="tiketRow">📐 <strong>'+t.kubik+' m³</strong></div>'+
-        '<div class="tiketRow">⏰ '+t.waktu+'</div>'+
-        '<div class="tiketRow">🚜 '+t.loader+'</div>'+
-        '</div>'+
-        '<div class="tiketActions">'+
-        '<input type="number" id="kubik_'+t.row+'" value="'+t.kubik+'" step="0.1" min="0" style="width:110px;padding:6px;border:1.5px solid #FCD34D;border-radius:6px;background:#FEFCE8">'+
-        '<button class="btn btnSuccess" onclick="validasiTiket('+t.row+',\''+t.noSeri+'\')">✅ Validasi</button>'+
-        '</div></div>';
+      html+='<div class="tiketItem"><div class="tiketHeader"><span class="tiketNoSeri">'+t.noSeri+'</span><span class="badge badgeWaiting">Menunggu</span></div>'+
+        '<div class="tiketBody"><div class="tiketRow">🚛 <strong>'+t.noPlat+'</strong></div><div class="tiketRow">👤 <strong>'+t.pelanggan+'</strong></div>'+
+        '<div class="tiketRow">📦 '+t.produk+'</div><div class="tiketRow">📐 <strong>'+t.kubik+' m³</strong></div>'+
+        '<div class="tiketRow">⏰ '+t.waktu+'</div><div class="tiketRow">🚜 '+t.loader+'</div></div>'+
+        '<div class="tiketActions"><input type="number" id="kubik_'+t.row+'" value="'+t.kubik+'" step="0.1" min="0" style="width:110px;padding:6px;border:1.5px solid #FCD34D;border-radius:6px;background:#FEFCE8">'+
+        '<button class="btn btnSuccess" onclick="validasiTiket('+t.row+',\''+t.noSeri+'\')">✅ Validasi</button></div></div>';
     });
     document.getElementById('checkerQueue').innerHTML=html;
   });
@@ -586,13 +505,8 @@ function submitGrosok(){
   var nominal=g?g.harga*rit:0;
   showAlert('grosokAlert','info','⏳ Menyimpan...');
   api('simpanGrosok',{supplier:supplier,jenisGrosok:jenis,rit:rit,targetMesin:mesin,noPlat:plat,noSuratJalan:sj,statusBayar:status,kondisiMuatan:kondisi,nominal:nominal,checker:STATE.user.nama,keterangan:ket},function(res){
-    if(res.ok){
-      showAlert('grosokAlert','success','✅ Grosok: '+res.noSeri);
-      document.getElementById('g_rit').value=1;
-      document.getElementById('g_plat').value='';
-      document.getElementById('g_sj').value='';
-      document.getElementById('g_ket').value='';
-    }else showAlert('grosokAlert','error','❌ '+res.pesan);
+    if(res.ok){showAlert('grosokAlert','success','✅ Grosok: '+res.noSeri);document.getElementById('g_rit').value=1;document.getElementById('g_plat').value='';document.getElementById('g_sj').value='';document.getElementById('g_ket').value='';}
+    else showAlert('grosokAlert','error','❌ '+res.pesan);
   });
 }
 
@@ -616,19 +530,11 @@ function renderKasirQueue(res){
   if(!q.length){document.getElementById('kasirQueue').innerHTML='<p style="text-align:center;color:#64748B;padding:20px">✅ Tidak ada tiket untuk diproses.</p>';return;}
   var html='';
   q.forEach(function(t){
-    html+='<div class="tiketItem">'+
-      '<div class="tiketHeader"><span class="tiketNoSeri">'+t.noSeri+'</span><span class="badge badgeValid">Tervalidasi</span></div>'+
-      '<div class="tiketBody">'+
-      '<div class="tiketRow">🚛 <strong>'+t.noPlat+'</strong></div>'+
-      '<div class="tiketRow">👤 <strong>'+t.pelanggan+'</strong></div>'+
-      '<div class="tiketRow">📦 '+t.produk+'</div>'+
-      '<div class="tiketRow">📐 '+t.kubik+' m³ @ '+fRp(t.hargaStandar)+'</div>'+
-      '<div class="tiketRow">💰 <strong>'+fRp(t.subtotal)+'</strong></div>'+
-      '<div class="tiketRow">✅ Checker: '+t.checker+'</div>'+
-      '</div>'+
-      '<div class="tiketActions">'+
-      '<button class="btn btnSuccess btnFull" onclick=\'pilihTiket('+JSON.stringify(t)+')\'>💰 Proses Bayar</button>'+
-      '</div></div>';
+    html+='<div class="tiketItem"><div class="tiketHeader"><span class="tiketNoSeri">'+t.noSeri+'</span><span class="badge badgeValid">Tervalidasi</span></div>'+
+      '<div class="tiketBody"><div class="tiketRow">🚛 <strong>'+t.noPlat+'</strong></div><div class="tiketRow">👤 <strong>'+t.pelanggan+'</strong></div>'+
+      '<div class="tiketRow">📦 '+t.produk+'</div><div class="tiketRow">📐 '+t.kubik+' m³ @ '+fRp(t.hargaStandar)+'</div>'+
+      '<div class="tiketRow">💰 <strong>'+fRp(t.subtotal)+'</strong></div><div class="tiketRow">✅ Checker: '+t.checker+'</div></div>'+
+      '<div class="tiketActions"><button class="btn btnSuccess btnFull" onclick=\'pilihTiket('+JSON.stringify(t)+')\'>💰 Proses Bayar</button></div></div>';
   });
   document.getElementById('kasirQueue').innerHTML=html;
 }
@@ -645,10 +551,7 @@ function pilihTiket(t){
   document.getElementById('b_dp').value='';
   document.getElementById('b_ket').value='';
   document.getElementById('b_metode').value='Cash';
-  document.getElementById('bayarInfo').innerHTML=
-    '<strong>'+t.noSeri+'</strong> | '+t.noPlat+
-    '<br>👤 '+t.pelanggan+' | 📦 '+t.produk+' | 📐 '+t.kubik+' m³'+
-    '<br>🔖 Harga standar: <strong>'+fRp(t.hargaStandar)+'/m³</strong>';
+  document.getElementById('bayarInfo').innerHTML='<strong>'+t.noSeri+'</strong> | '+t.noPlat+'<br>👤 '+t.pelanggan+' | 📦 '+t.produk+' | 📐 '+t.kubik+' m³<br>🔖 Harga standar: <strong>'+fRp(t.hargaStandar)+'/m³</strong>';
   cekMetodeBayar();hitungTotal();window.scrollTo(0,0);
 }
 
@@ -664,8 +567,7 @@ function hitungTotal(){
   var t=STATE.selectedTiket;if(!t)return;
   var hargaDeal=parseFloat(document.getElementById('b_hargaDeal').value)||t.hargaStandar;
   var ongkir=parseFloat(document.getElementById('b_ongkir').value)||0;
-  var subtotal=t.kubik*hargaDeal;
-  var total=subtotal+ongkir;
+  var subtotal=t.kubik*hargaDeal;var total=subtotal+ongkir;
   var diskon=(t.hargaStandar-hargaDeal)*t.kubik;
   document.getElementById('bayarSummary').innerHTML=
     '<div class="summaryRow"><span>'+t.kubik+' m³ × '+fRp(hargaDeal)+'</span><span>'+fRp(subtotal)+'</span></div>'+
@@ -692,9 +594,7 @@ function hitungSisaBon(){
   var total=t.kubik*hargaDeal+ongkir;
   var dp=parseFloat(document.getElementById('b_dp').value)||0;
   var sisa=Math.max(0,total-dp);
-  document.getElementById('sisaBonInfo').innerHTML=
-    'Total: <strong>'+fRp(total)+'</strong> | DP: <strong>'+fRp(dp)+'</strong><br>'+
-    'Sisa piutang: <strong style="color:#991B1B">'+fRp(sisa)+'</strong>';
+  document.getElementById('sisaBonInfo').innerHTML='Total: <strong>'+fRp(total)+'</strong> | DP: <strong>'+fRp(dp)+'</strong><br>Sisa piutang: <strong style="color:#991B1B">'+fRp(sisa)+'</strong>';
 }
 
 function batalBayar(){
@@ -709,22 +609,16 @@ function prosesLunas(){
   var metode=document.getElementById('b_metode').value;
   var hargaDeal=parseFloat(document.getElementById('b_hargaDeal').value)||t.hargaStandar;
   var ongkir=parseFloat(document.getElementById('b_ongkir').value)||0;
-  var isBon=metode==='Belum Bayar';
-  var isSebagian=metode==='Belum Lunas';
+  var isBon=metode==='Belum Bayar';var isSebagian=metode==='Belum Lunas';
   var diterima=isBon?0:isSebagian?(parseFloat(document.getElementById('b_dp').value)||0):(parseFloat(document.getElementById('b_diterima').value)||0);
   var pin=document.getElementById('b_pin')?document.getElementById('b_pin').value:'';
   if(!metode){showAlert('bayarAlert','error','Pilih metode bayar!');return;}
   if(!isBon&&!isSebagian&&!diterima){showAlert('bayarAlert','error','Masukkan uang yang diterima!');return;}
   showAlert('bayarAlert','info','⏳ Menyimpan transaksi...');
   api('finalizeCashierPayment',{rowNum:t.row,hargaStandar:t.hargaStandar,hargaDeal:hargaDeal,kubik:t.kubik,ongkir:ongkir,uangDiterima:diterima,metodeBayar:metode,kasir:STATE.user.nama,keterangan:document.getElementById('b_ket').value,pinOwner:pin},function(res){
-    if(res.ok){
-      STATE.selectedTiket=null;
-      tampilStruk(res.struk);
-      setTimeout(function(){api('getCashierQueue',{},renderKasirQueue);},1500);
-    }else if(res.butuhPin){
-      showAlert('bayarAlert','error','🔒 '+res.pesan);
-      document.getElementById('pinOwnerBox').style.display='block';
-    }else showAlert('bayarAlert','error','❌ '+res.pesan);
+    if(res.ok){STATE.selectedTiket=null;tampilStruk(res.struk);setTimeout(function(){api('getCashierQueue',{},renderKasirQueue);},1500);}
+    else if(res.butuhPin){showAlert('bayarAlert','error','🔒 '+res.pesan);document.getElementById('pinOwnerBox').style.display='block';}
+    else showAlert('bayarAlert','error','❌ '+res.pesan);
   });
 }
 
@@ -733,12 +627,9 @@ function tampilStruk(s){
   document.getElementById('strukArea').style.display='block';
   document.getElementById('strukBox').innerHTML=
     '<div class="str-header"><h3>PABRIK PENGGILINGAN KORAL</h3><p>CV Mulya Batu Coral</p></div>'+
-    '<div>No. Seri  : <strong>'+s.noSeri+'</strong></div>'+
-    '<div>Tanggal   : '+s.tanggal+'  '+s.waktu+'</div>'+
-    '<div>Kasir     : '+s.kasir+'</div>'+
-    '<div>Pelanggan : '+s.pelanggan+'</div>'+
-    '<div>No. Truk  : '+s.noPlat+'</div>'+
-    '<div>Loader    : '+s.loader+'</div>'+
+    '<div>No. Seri  : <strong>'+s.noSeri+'</strong></div><div>Tanggal   : '+s.tanggal+'  '+s.waktu+'</div>'+
+    '<div>Kasir     : '+s.kasir+'</div><div>Pelanggan : '+s.pelanggan+'</div>'+
+    '<div>No. Truk  : '+s.noPlat+'</div><div>Loader    : '+s.loader+'</div>'+
     '<hr style="border:none;border-top:1px dashed #94A3B8;margin:10px 0">'+
     '<div>'+s.produk+'</div>'+
     '<div class="strukRow"><span>'+s.kubik+' m³ × '+fRp(s.hargaDeal)+'</span><span>'+fRp(s.subtotal)+'</span></div>'+
@@ -754,10 +645,7 @@ function tampilStruk(s){
   window.scrollTo(0,0);
 }
 
-function tutupStruk(){
-  document.getElementById('strukArea').style.display='none';
-  document.getElementById('kasirQueueCard').style.display='block';
-}
+function tutupStruk(){document.getElementById('strukArea').style.display='none';document.getElementById('kasirQueueCard').style.display='block';}
 
 function submitPemasukan(){
   var jenis=document.getElementById('pm_jenis').value;
@@ -790,11 +678,7 @@ function loadTutupKasir(){
   api('getTutupKasirData',{tanggal:nowDateStr()},function(res){
     if(res.ok){
       STATE.tutupData=res.data;
-      document.getElementById('tutupSummary').innerHTML=
-        '<strong>Tanggal:</strong> '+res.data.tanggal+'<br>'+
-        '💰 Pemasukan Cash: <strong>'+fRp(res.data.pemasukanCash)+'</strong><br>'+
-        '📤 Pengeluaran: <strong>'+fRp(res.data.pengeluaranKas)+'</strong><br>'+
-        '📊 Saldo Harapan: <strong style="color:#1E40AF">'+fRp(res.data.saldoHarapan)+'</strong>';
+      document.getElementById('tutupSummary').innerHTML='<strong>Tanggal:</strong> '+res.data.tanggal+'<br>💰 Pemasukan Cash: <strong>'+fRp(res.data.pemasukanCash)+'</strong><br>📤 Pengeluaran: <strong>'+fRp(res.data.pengeluaranKas)+'</strong><br>📊 Saldo Harapan: <strong style="color:#1E40AF">'+fRp(res.data.saldoHarapan)+'</strong>';
       showAlert('tutupAlert','success','✅ Data dimuat.');
     }else showAlert('tutupAlert','error','❌ '+res.pesan);
   });
@@ -810,22 +694,11 @@ function hitungFisik(){
 function submitTutupKasir(){
   if(!STATE.tutupData){showAlert('tutupAlert','error','Muat data hari ini dulu!');return;}
   showAlert('tutupAlert','info','⏳ Menyimpan...');
-  api('simpanTutupKasir',{
-    tanggal:STATE.tutupData.tanggal,kasir:STATE.user.nama,
-    pemasukanCash:STATE.tutupData.pemasukanCash,
-    pengeluaranKas:STATE.tutupData.pengeluaranKas,
-    saldoHarapan:STATE.tutupData.saldoHarapan,
-    lembar100:document.getElementById('tk_100').value,
-    lembar50:document.getElementById('tk_50').value,
-    pecahan:document.getElementById('tk_pecahan').value,
-    setorDropSafe:document.getElementById('tk_dropSafe').value,
-    keterangan:document.getElementById('tk_ket').value
-  },function(res){
+  api('simpanTutupKasir',{tanggal:STATE.tutupData.tanggal,kasir:STATE.user.nama,pemasukanCash:STATE.tutupData.pemasukanCash,pengeluaranKas:STATE.tutupData.pengeluaranKas,saldoHarapan:STATE.tutupData.saldoHarapan,lembar100:document.getElementById('tk_100').value,lembar50:document.getElementById('tk_50').value,pecahan:document.getElementById('tk_pecahan').value,setorDropSafe:document.getElementById('tk_dropSafe').value,keterangan:document.getElementById('tk_ket').value},function(res){
     if(res.ok){
       showAlert('tutupAlert','success','🔒 '+res.status+' | Selisih: '+fRp(res.selisih));
       ['tk_100','tk_50','tk_pecahan','tk_dropSafe','tk_totalFisik'].forEach(function(id){document.getElementById(id).value=0;});
-      document.getElementById('tk_ket').value='';
-      STATE.tutupData=null;
+      document.getElementById('tk_ket').value='';STATE.tutupData=null;
       document.getElementById('tutupSummary').innerHTML='✅ Tutup kasir berhasil disimpan.';
     }else showAlert('tutupAlert','error','❌ '+res.pesan);
   });
@@ -848,23 +721,12 @@ function loadPiutang(){
     if(!list.length){document.getElementById('piutangList').innerHTML='<p style="text-align:center;color:#64748B;padding:20px">✅ Tidak ada piutang outstanding.</p>';return;}
     var html='';
     list.forEach(function(p){
-      html+='<div class="tiketItem">'+
-        '<div class="tiketHeader"><span class="tiketNoSeri">'+p.noSeri+'</span><span class="badge badgeLate">'+p.metodeBayar+'</span></div>'+
-        '<div class="tiketBody">'+
-        '<div class="tiketRow">📅 '+p.tanggal+'</div>'+
-        '<div class="tiketRow">👤 <strong>'+p.pelanggan+'</strong></div>'+
-        '<div class="tiketRow">📦 '+p.produk+' '+p.kubik+' m³</div>'+
-        '<div class="tiketRow" style="color:#EF4444">⚠️ Sisa: <strong>'+fRp(p.sisaPiutang)+'</strong></div>'+
-        '</div>'+
-        '<div class="tiketActions">'+
-        '<input type="number" id="lns_'+p.row+'" placeholder="Jumlah bayar" style="flex:1;padding:6px;border:1.5px solid #FCD34D;border-radius:6px;background:#FEFCE8">'+
-        '<select id="met_'+p.row+'" style="padding:6px;border:1.5px solid #E2E8F0;border-radius:6px">'+
-        '<option value="Cash">Cash</option>'+
-        '<option value="TF - Rek. CV (Utama)">TF CV</option>'+
-        '<option value="QRIS">QRIS</option>'+
-        '</select>'+
-        '<button class="btn btnSuccess" onclick="lunasPiutang('+p.row+')">✅ Catat</button>'+
-        '</div></div>';
+      html+='<div class="tiketItem"><div class="tiketHeader"><span class="tiketNoSeri">'+p.noSeri+'</span><span class="badge badgeLate">'+p.metodeBayar+'</span></div>'+
+        '<div class="tiketBody"><div class="tiketRow">📅 '+p.tanggal+'</div><div class="tiketRow">👤 <strong>'+p.pelanggan+'</strong></div>'+
+        '<div class="tiketRow">📦 '+p.produk+' '+p.kubik+' m³</div><div class="tiketRow" style="color:#EF4444">⚠️ Sisa: <strong>'+fRp(p.sisaPiutang)+'</strong></div></div>'+
+        '<div class="tiketActions"><input type="number" id="lns_'+p.row+'" placeholder="Jumlah bayar" style="flex:1;padding:6px;border:1.5px solid #FCD34D;border-radius:6px;background:#FEFCE8">'+
+        '<select id="met_'+p.row+'" style="padding:6px;border:1.5px solid #E2E8F0;border-radius:6px"><option value="Cash">Cash</option><option value="TF - Rek. CV (Utama)">TF CV</option><option value="QRIS">QRIS</option></select>'+
+        '<button class="btn btnSuccess" onclick="lunasPiutang('+p.row+')">✅ Catat</button></div></div>';
     });
     document.getElementById('piutangList').innerHTML=html;
   });
