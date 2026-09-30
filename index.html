@@ -284,7 +284,6 @@ input,select,textarea{font-family:inherit;font-size:14px}
         </div>
       </div>
     </div>
-    <!-- Pemasukan Lain pindah ke sini -->
     <div class="card">
       <h3>💳 Input Pemasukan Lain</h3>
       <div class="alert alertSuccess" id="pemasukanAlert"></div>
@@ -379,10 +378,9 @@ input,select,textarea{font-family:inherit;font-size:14px}
 </div>
 
 <script>
-var STATE = { user:null, master:null, selectedTiket:null, tutupData:null };
+var STATE={user:null,master:null,selectedTiket:null,tutupData:null};
 
-// ── HELPER ───────────────────────────────────────────────────
-function fRp(n){ return 'Rp '+(parseFloat(n)||0).toLocaleString('id-ID'); }
+function fRp(n){return 'Rp '+(parseFloat(n)||0).toLocaleString('id-ID');}
 
 function nowDateStr(){
   var d=new Date();
@@ -390,57 +388,54 @@ function nowDateStr(){
 }
 
 function showAlert(id,type,msg){
-  var el=document.getElementById(id); if(!el) return;
+  var el=document.getElementById(id);if(!el)return;
   el.className='alert alert'+(type==='success'?'Success':type==='error'?'Error':'Info');
-  el.textContent=msg; el.style.display='block';
-  if(type==='success') setTimeout(function(){ el.style.display='none'; },4000);
+  el.textContent=msg;el.style.display='block';
+  if(type==='success')setTimeout(function(){el.style.display='none';},4000);
 }
 
-// ── API CALL — ganti google.script.run dengan fetch ──────────
-function api(action, params, callback) {
-  var url = SCRIPT_URL + '?action=' + encodeURIComponent(action);
-  fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain' },
-    body: JSON.stringify(params || {})
+function api(action,params,callback){
+  var url=SCRIPT_URL+'?action='+encodeURIComponent(action);
+  fetch(url,{
+    method:'POST',
+    headers:{'Content-Type':'text/plain'},
+    body:JSON.stringify(params||{})
   })
-  .then(function(r){ return r.json(); })
-  .then(function(data){ callback(data); })
-  .catch(function(e){ callback({ ok:false, pesan:'Network error: '+e.message }); });
+  .then(function(r){return r.json();})
+  .then(function(data){callback(data);})
+  .catch(function(e){callback({ok:false,pesan:'Network error: '+e.message});});
 }
 
-// ── LOGIN ────────────────────────────────────────────────────
 document.getElementById('loginPass').addEventListener('keypress',function(e){
-  if(e.key==='Enter') doLogin();
+  if(e.key==='Enter')doLogin();
 });
 
 function doLogin(){
   var u=document.getElementById('loginUser').value.trim();
   var p=document.getElementById('loginPass').value;
-  if(!u||!p){ showLoginErr('Username dan password wajib diisi.'); return; }
+  if(!u||!p){showLoginErr('Username dan password wajib diisi.');return;}
   showLoginErr('');
   document.querySelector('.btnLogin').textContent='⏳ Memuat...';
   api('login',{username:u,password:p},function(res){
     document.querySelector('.btnLogin').textContent='🔐 Masuk';
-    if(res.ok){ STATE.user=res; initApp(res); }
+    if(res.ok){STATE.user=res;initApp(res);}
     else showLoginErr(res.pesan||'Login gagal.');
   });
 }
 
 function showLoginErr(msg){
   var el=document.getElementById('loginErr');
-  el.textContent=msg; el.style.display=msg?'block':'none';
+  el.textContent=msg;el.style.display=msg?'block':'none';
 }
 
 function doLogout(){
-  STATE.user=null; STATE.master=null; STATE.selectedTiket=null;
+  STATE.user=null;STATE.master=null;STATE.selectedTiket=null;
   document.getElementById('loginScreen').style.display='flex';
   document.getElementById('appScreen').style.display='none';
   document.getElementById('loginUser').value='';
   document.getElementById('loginPass').value='';
 }
 
-// ── INIT APP ─────────────────────────────────────────────────
 function initApp(user){
   document.getElementById('loginScreen').style.display='none';
   document.getElementById('appScreen').style.display='flex';
@@ -457,68 +452,66 @@ function getRoleLabel(r){
 
 function buildTabs(role){
   var tabs=[];
-  if(['loader','owner','direktur'].indexOf(role)>-1) tabs.push({id:'loader',label:'🚜 Loader'});
-  if(['checker','owner','direktur'].indexOf(role)>-1) tabs.push({id:'checker',label:'✅ Checker'});
+  if(['loader','owner','direktur'].indexOf(role)>-1)tabs.push({id:'loader',label:'🚜 Loader'});
+  if(['checker','owner','direktur'].indexOf(role)>-1)tabs.push({id:'checker',label:'✅ Checker'});
   if(['kasir','owner','direktur'].indexOf(role)>-1){
     tabs.push({id:'kasir',label:'💰 Kasir'});
     tabs.push({id:'piutang',label:'📋 Piutang'});
   }
-  if(['owner','direktur'].indexOf(role)>-1) tabs.push({id:'owner',label:'📊 Owner'});
-  var bar=document.getElementById('tabBar'); bar.innerHTML='';
+  if(['owner','direktur'].indexOf(role)>-1)tabs.push({id:'owner',label:'📊 Owner'});
+  var bar=document.getElementById('tabBar');bar.innerHTML='';
   tabs.forEach(function(t,i){
     var btn=document.createElement('button');
     btn.className='tabBtn'+(i===0?' active':'');
     btn.textContent=t.label;
-    btn.onclick=(function(tid,b){ return function(){ switchTab(tid,b); }; })(t.id,btn);
+    btn.onclick=(function(tid,b){return function(){switchTab(tid,b);};})(t.id,btn);
     bar.appendChild(btn);
   });
-  if(tabs.length>0) showTab(tabs[0].id);
-  if(['checker','owner','direktur'].indexOf(role)>-1) setTimeout(loadCheckerQueue,600);
-  if(['kasir','owner','direktur'].indexOf(role)>-1) setTimeout(loadCashierQueue,600);
-  if(['owner','direktur'].indexOf(role)>-1) setTimeout(loadDashboard,700);
+  if(tabs.length>0)showTab(tabs[0].id);
+  if(['checker','owner','direktur'].indexOf(role)>-1)setTimeout(loadCheckerQueue,600);
+  if(['kasir','owner','direktur'].indexOf(role)>-1)setTimeout(loadCashierQueue,600);
+  if(['owner','direktur'].indexOf(role)>-1)setTimeout(loadDashboard,700);
 }
 
 function switchTab(id,btn){
-  document.querySelectorAll('.tabBtn').forEach(function(b){ b.classList.remove('active'); });
-  btn.classList.add('active'); showTab(id);
+  document.querySelectorAll('.tabBtn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');showTab(id);
 }
 
 function showTab(id){
-  document.querySelectorAll('.tabContent').forEach(function(c){ c.classList.remove('active'); });
-  var el=document.getElementById('tab-'+id); if(el) el.classList.add('active');
+  document.querySelectorAll('.tabContent').forEach(function(c){c.classList.remove('active');});
+  var el=document.getElementById('tab-'+id);if(el)el.classList.add('active');
 }
 
-// ── MASTER DATA ──────────────────────────────────────────────
 function loadMaster(){
   api('getMasterData',{},function(res){
-    if(res.ok){ STATE.master=res.data; fillDropdowns(); }
+    if(res.ok){STATE.master=res.data;fillDropdowns();}
   });
 }
 
 function fillDropdowns(){
-  var m=STATE.master; if(!m) return;
-  fillSelect('l_pelanggan',m.pelanggan.map(function(p){ return {val:p.nama,label:p.nama+(p.fastTrack?' 🟢':'')}; }),'-- Pilih Pelanggan --');
-  fillSelect('l_produk',m.produk.map(function(p){ return {val:p.nama,label:p.nama+' — '+fRp(p.harga)+'/m³'}; }),'-- Pilih Produk --');
-  fillSelect('l_loader',m.karyawan.map(function(k){ return {val:k,label:k}; }),'-- Nama Loader --');
-  fillSelect('g_supplier',m.supplier.map(function(s){ return {val:s.nama,label:s.nama}; }),'-- Pilih Supplier --');
-  fillSelect('g_jenis',m.grosok.map(function(g){ return {val:g.nama,label:g.nama+' ('+g.mesin+')'}; }),'-- Pilih Jenis --');
-  fillSelect('pe_jenis',m.pengeluaran.map(function(k){ return {val:k,label:k}; }),'-- Pilih Kategori --');
+  var m=STATE.master;if(!m)return;
+  fillSelect('l_pelanggan',m.pelanggan.map(function(p){return {val:p.nama,label:p.nama+(p.fastTrack?' 🟢':'')};}), '-- Pilih Pelanggan --');
+  fillSelect('l_produk',m.produk.map(function(p){return {val:p.nama,label:p.nama+' — '+fRp(p.harga)+'/m³'};}), '-- Pilih Produk --');
+  fillSelect('l_loader',m.karyawan.map(function(k){return {val:k,label:k};}), '-- Nama Loader --');
+  fillSelect('g_supplier',m.supplier.map(function(s){return {val:s.nama,label:s.nama};}), '-- Pilih Supplier --');
+  fillSelect('g_jenis',m.grosok.map(function(g){return {val:g.nama,label:g.nama+' ('+g.mesin+')'};}), '-- Pilih Jenis --');
+  fillSelect('pe_jenis',m.pengeluaran.map(function(k){return {val:k,label:k};}), '-- Pilih Kategori --');
   document.getElementById('g_jenis').addEventListener('change',function(){
-    var g=m.grosok.find(function(x){ return x.nama===this.value; },this);
-    if(g&&g.mesin) document.getElementById('g_mesin').value=g.mesin;
+    var g=m.grosok.find(function(x){return x.nama===this.value;},this);
+    if(g&&g.mesin)document.getElementById('g_mesin').value=g.mesin;
   });
 }
 
 function fillSelect(id,items,placeholder){
-  var el=document.getElementById(id); if(!el) return;
+  var el=document.getElementById(id);if(!el)return;
   el.innerHTML='<option value="">'+placeholder+'</option>';
   items.forEach(function(item){
     var opt=document.createElement('option');
-    opt.value=item.val; opt.textContent=item.label; el.appendChild(opt);
+    opt.value=item.val;opt.textContent=item.label;el.appendChild(opt);
   });
 }
 
-// ── LOADER ───────────────────────────────────────────────────
 function submitLoader(){
   var noPlat=document.getElementById('l_noPlat').value.trim().toUpperCase();
   var pelanggan=document.getElementById('l_pelanggan').value;
@@ -527,7 +520,7 @@ function submitLoader(){
   var kondisi=document.getElementById('l_kondisi').value;
   var loader=document.getElementById('l_loader').value||STATE.user.nama;
   var ket=document.getElementById('l_ket').value;
-  if(!noPlat||!pelanggan||!produk||!kubik){ showAlert('loaderAlert','error','No Plat, Pelanggan, Produk, dan Kubik wajib diisi!'); return; }
+  if(!noPlat||!pelanggan||!produk||!kubik){showAlert('loaderAlert','error','No Plat, Pelanggan, Produk, dan Kubik wajib diisi!');return;}
   showAlert('loaderAlert','info','⏳ Menyimpan tiket...');
   api('submitLoaderTicket',{noPlat:noPlat,pelanggan:pelanggan,produk:produk,kubik:kubik,kondisiMuatan:kondisi,loader:loader,keterangan:ket},function(res){
     if(res.ok){
@@ -537,17 +530,16 @@ function submitLoader(){
       document.getElementById('l_produk').value='';
       document.getElementById('l_kubik').value='';
       document.getElementById('l_ket').value='';
-    } else showAlert('loaderAlert','error','❌ '+res.pesan);
+    }else showAlert('loaderAlert','error','❌ '+res.pesan);
   });
 }
 
-// ── CHECKER ──────────────────────────────────────────────────
 function loadCheckerQueue(){
   document.getElementById('checkerQueue').innerHTML='<div class="loading"><div class="spinner"></div><br>Memuat...</div>';
   api('getCheckerQueue',{},function(res){
-    if(!res.ok){ document.getElementById('checkerQueue').innerHTML='<p style="color:#EF4444;padding:12px">❌ '+res.pesan+'</p>'; return; }
+    if(!res.ok){document.getElementById('checkerQueue').innerHTML='<p style="color:#EF4444;padding:12px">❌ '+res.pesan+'</p>';return;}
     var q=res.data;
-    if(!q.length){ document.getElementById('checkerQueue').innerHTML='<p style="text-align:center;color:#64748B;padding:20px">✅ Tidak ada tiket menunggu.</p>'; return; }
+    if(!q.length){document.getElementById('checkerQueue').innerHTML='<p style="text-align:center;color:#64748B;padding:20px">✅ Tidak ada tiket menunggu.</p>';return;}
     var html='';
     q.forEach(function(t){
       html+='<div class="tiketItem">'+
@@ -556,7 +548,7 @@ function loadCheckerQueue(){
         '<div class="tiketRow">🚛 <strong>'+t.noPlat+'</strong></div>'+
         '<div class="tiketRow">👤 <strong>'+t.pelanggan+'</strong></div>'+
         '<div class="tiketRow">📦 '+t.produk+'</div>'+
-        '<div class="tiketRow">📐 Kubik: <strong>'+t.kubik+' m³</strong></div>'+
+        '<div class="tiketRow">📐 <strong>'+t.kubik+' m³</strong></div>'+
         '<div class="tiketRow">⏰ '+t.waktu+'</div>'+
         '<div class="tiketRow">🚜 '+t.loader+'</div>'+
         '</div>'+
@@ -571,10 +563,10 @@ function loadCheckerQueue(){
 
 function validasiTiket(rowNum,noSeri){
   var kubikFinal=parseFloat(document.getElementById('kubik_'+rowNum).value);
-  if(!kubikFinal){ showAlert('checkerAlert','error','Kubik final wajib diisi!'); return; }
+  if(!kubikFinal){showAlert('checkerAlert','error','Kubik final wajib diisi!');return;}
   showAlert('checkerAlert','info','⏳ Memvalidasi...');
   api('approveCheckerTicket',{rowNum:rowNum,kubikFinal:kubikFinal,checker:STATE.user.nama,kondisi:'Peres',catatan:''},function(res){
-    if(res.ok){ showAlert('checkerAlert','success','✅ Tiket '+noSeri+' divalidasi.'); setTimeout(loadCheckerQueue,1000); }
+    if(res.ok){showAlert('checkerAlert','success','✅ Tiket '+noSeri+' divalidasi.');setTimeout(loadCheckerQueue,1000);}
     else showAlert('checkerAlert','error','❌ '+res.pesan);
   });
 }
@@ -589,19 +581,23 @@ function submitGrosok(){
   var status=document.getElementById('g_status').value;
   var kondisi=document.getElementById('g_kondisi').value;
   var ket=document.getElementById('g_ket').value;
-  if(!supplier||!jenis){ showAlert('grosokAlert','error','Supplier dan Jenis Grosok wajib diisi!'); return; }
-  var g=STATE.master?STATE.master.grosok.find(function(x){ return x.nama===jenis; }):null;
+  if(!supplier||!jenis){showAlert('grosokAlert','error','Supplier dan Jenis Grosok wajib diisi!');return;}
+  var g=STATE.master?STATE.master.grosok.find(function(x){return x.nama===jenis;}):null;
   var nominal=g?g.harga*rit:0;
   showAlert('grosokAlert','info','⏳ Menyimpan...');
   api('simpanGrosok',{supplier:supplier,jenisGrosok:jenis,rit:rit,targetMesin:mesin,noPlat:plat,noSuratJalan:sj,statusBayar:status,kondisiMuatan:kondisi,nominal:nominal,checker:STATE.user.nama,keterangan:ket},function(res){
-    if(res.ok){ showAlert('grosokAlert','success','✅ Grosok: '+res.noSeri); document.getElementById('g_rit').value=1; document.getElementById('g_plat').value=''; document.getElementById('g_sj').value=''; document.getElementById('g_ket').value=''; }
-    else showAlert('grosokAlert','error','❌ '+res.pesan);
+    if(res.ok){
+      showAlert('grosokAlert','success','✅ Grosok: '+res.noSeri);
+      document.getElementById('g_rit').value=1;
+      document.getElementById('g_plat').value='';
+      document.getElementById('g_sj').value='';
+      document.getElementById('g_ket').value='';
+    }else showAlert('grosokAlert','error','❌ '+res.pesan);
   });
 }
 
-// ── KASIR ────────────────────────────────────────────────────
 function loadCashierQueue(){
-  if(STATE.selectedTiket) return;
+  if(STATE.selectedTiket)return;
   document.getElementById('kasirQueue').innerHTML='<div class="loading"><div class="spinner"></div><br>Memuat...</div>';
   api('getCashierQueue',{},renderKasirQueue);
 }
@@ -615,9 +611,9 @@ function refreshKasirQueue(){
 }
 
 function renderKasirQueue(res){
-  if(!res.ok){ document.getElementById('kasirQueue').innerHTML='<p style="color:#EF4444;padding:12px">❌ '+res.pesan+'</p>'; return; }
+  if(!res.ok){document.getElementById('kasirQueue').innerHTML='<p style="color:#EF4444;padding:12px">❌ '+res.pesan+'</p>';return;}
   var q=res.data;
-  if(!q.length){ document.getElementById('kasirQueue').innerHTML='<p style="text-align:center;color:#64748B;padding:20px">✅ Tidak ada tiket untuk diproses.</p>'; return; }
+  if(!q.length){document.getElementById('kasirQueue').innerHTML='<p style="text-align:center;color:#64748B;padding:20px">✅ Tidak ada tiket untuk diproses.</p>';return;}
   var html='';
   q.forEach(function(t){
     html+='<div class="tiketItem">'+
@@ -653,7 +649,7 @@ function pilihTiket(t){
     '<strong>'+t.noSeri+'</strong> | '+t.noPlat+
     '<br>👤 '+t.pelanggan+' | 📦 '+t.produk+' | 📐 '+t.kubik+' m³'+
     '<br>🔖 Harga standar: <strong>'+fRp(t.hargaStandar)+'/m³</strong>';
-  cekMetodeBayar(); hitungTotal(); window.scrollTo(0,0);
+  cekMetodeBayar();hitungTotal();window.scrollTo(0,0);
 }
 
 function cekMetodeBayar(){
@@ -661,11 +657,11 @@ function cekMetodeBayar(){
   document.getElementById('bayarTunaiBox').style.display=(m!=='Belum Bayar'&&m!=='Belum Lunas')?'block':'none';
   document.getElementById('bonPenuhBox').style.display=m==='Belum Bayar'?'block':'none';
   document.getElementById('bayarSebagianBox').style.display=m==='Belum Lunas'?'block':'none';
-  if(m==='Belum Lunas') hitungSisaBon();
+  if(m==='Belum Lunas')hitungSisaBon();
 }
 
 function hitungTotal(){
-  var t=STATE.selectedTiket; if(!t) return;
+  var t=STATE.selectedTiket;if(!t)return;
   var hargaDeal=parseFloat(document.getElementById('b_hargaDeal').value)||t.hargaStandar;
   var ongkir=parseFloat(document.getElementById('b_ongkir').value)||0;
   var subtotal=t.kubik*hargaDeal;
@@ -677,11 +673,11 @@ function hitungTotal(){
     (ongkir>0?'<div class="summaryRow"><span>🚚 Ongkir</span><span>'+fRp(ongkir)+'</span></div>':'')+
     '<div class="summaryRow total"><span>TOTAL TAGIHAN</span><span>'+fRp(total)+'</span></div>';
   document.getElementById('pinOwnerBox').style.display=(t.hargaStandar-hargaDeal>10000)?'block':'none';
-  hitungKembalian(); hitungSisaBon();
+  hitungKembalian();hitungSisaBon();
 }
 
 function hitungKembalian(){
-  var t=STATE.selectedTiket; if(!t) return;
+  var t=STATE.selectedTiket;if(!t)return;
   var hargaDeal=parseFloat(document.getElementById('b_hargaDeal').value)||t.hargaStandar;
   var ongkir=parseFloat(document.getElementById('b_ongkir').value)||0;
   var total=t.kubik*hargaDeal+ongkir;
@@ -690,7 +686,7 @@ function hitungKembalian(){
 }
 
 function hitungSisaBon(){
-  var t=STATE.selectedTiket; if(!t) return;
+  var t=STATE.selectedTiket;if(!t)return;
   var hargaDeal=parseFloat(document.getElementById('b_hargaDeal').value)||t.hargaStandar;
   var ongkir=parseFloat(document.getElementById('b_ongkir').value)||0;
   var total=t.kubik*hargaDeal+ongkir;
@@ -709,7 +705,7 @@ function batalBayar(){
 }
 
 function prosesLunas(){
-  var t=STATE.selectedTiket; if(!t) return;
+  var t=STATE.selectedTiket;if(!t)return;
   var metode=document.getElementById('b_metode').value;
   var hargaDeal=parseFloat(document.getElementById('b_hargaDeal').value)||t.hargaStandar;
   var ongkir=parseFloat(document.getElementById('b_ongkir').value)||0;
@@ -717,18 +713,18 @@ function prosesLunas(){
   var isSebagian=metode==='Belum Lunas';
   var diterima=isBon?0:isSebagian?(parseFloat(document.getElementById('b_dp').value)||0):(parseFloat(document.getElementById('b_diterima').value)||0);
   var pin=document.getElementById('b_pin')?document.getElementById('b_pin').value:'';
-  if(!metode){ showAlert('bayarAlert','error','Pilih metode bayar!'); return; }
-  if(!isBon&&!isSebagian&&!diterima){ showAlert('bayarAlert','error','Masukkan uang yang diterima!'); return; }
+  if(!metode){showAlert('bayarAlert','error','Pilih metode bayar!');return;}
+  if(!isBon&&!isSebagian&&!diterima){showAlert('bayarAlert','error','Masukkan uang yang diterima!');return;}
   showAlert('bayarAlert','info','⏳ Menyimpan transaksi...');
   api('finalizeCashierPayment',{rowNum:t.row,hargaStandar:t.hargaStandar,hargaDeal:hargaDeal,kubik:t.kubik,ongkir:ongkir,uangDiterima:diterima,metodeBayar:metode,kasir:STATE.user.nama,keterangan:document.getElementById('b_ket').value,pinOwner:pin},function(res){
     if(res.ok){
       STATE.selectedTiket=null;
       tampilStruk(res.struk);
-      setTimeout(function(){ api('getCashierQueue',{},renderKasirQueue); },1500);
-    } else if(res.butuhPin){
+      setTimeout(function(){api('getCashierQueue',{},renderKasirQueue);},1500);
+    }else if(res.butuhPin){
       showAlert('bayarAlert','error','🔒 '+res.pesan);
       document.getElementById('pinOwnerBox').style.display='block';
-    } else showAlert('bayarAlert','error','❌ '+res.pesan);
+    }else showAlert('bayarAlert','error','❌ '+res.pesan);
   });
 }
 
@@ -768,10 +764,10 @@ function submitPemasukan(){
   var nominal=parseFloat(document.getElementById('pm_nominal').value);
   var metode=document.getElementById('pm_metode').value;
   var ket=document.getElementById('pm_ket').value;
-  if(!jenis||!nominal){ showAlert('pemasukanAlert','error','Jenis dan nominal wajib diisi!'); return; }
+  if(!jenis||!nominal){showAlert('pemasukanAlert','error','Jenis dan nominal wajib diisi!');return;}
   showAlert('pemasukanAlert','info','⏳ Menyimpan...');
   api('submitPemasukanLain',{jenis:jenis,nominal:nominal,metodeBayar:metode,statusBayar:'Lunas',keterangan:ket},function(res){
-    if(res.ok){ showAlert('pemasukanAlert','success','✅ Pemasukan: '+res.noSeri); document.getElementById('pm_nominal').value=''; document.getElementById('pm_ket').value=''; }
+    if(res.ok){showAlert('pemasukanAlert','success','✅ Pemasukan: '+res.noSeri);document.getElementById('pm_nominal').value='';document.getElementById('pm_ket').value='';}
     else showAlert('pemasukanAlert','error','❌ '+res.pesan);
   });
 }
@@ -781,10 +777,10 @@ function submitPengeluaran(){
   var total=parseFloat(document.getElementById('pe_total').value);
   var status=document.getElementById('pe_status').value;
   var ket=document.getElementById('pe_ket').value;
-  if(!jenis||!total){ showAlert('pengeluaranAlert','error','Kategori dan Total wajib diisi!'); return; }
+  if(!jenis||!total){showAlert('pengeluaranAlert','error','Kategori dan Total wajib diisi!');return;}
   showAlert('pengeluaranAlert','info','⏳ Menyimpan...');
   api('submitPengeluaranLain',{jenis:jenis,total:total,status:status,siapa:STATE.user.nama,keterangan:ket},function(res){
-    if(res.ok){ showAlert('pengeluaranAlert','success','✅ Pengeluaran: '+res.noSeri); document.getElementById('pe_total').value=''; document.getElementById('pe_ket').value=''; }
+    if(res.ok){showAlert('pengeluaranAlert','success','✅ Pengeluaran: '+res.noSeri);document.getElementById('pe_total').value='';document.getElementById('pe_ket').value='';}
     else showAlert('pengeluaranAlert','error','❌ '+res.pesan);
   });
 }
@@ -800,7 +796,7 @@ function loadTutupKasir(){
         '📤 Pengeluaran: <strong>'+fRp(res.data.pengeluaranKas)+'</strong><br>'+
         '📊 Saldo Harapan: <strong style="color:#1E40AF">'+fRp(res.data.saldoHarapan)+'</strong>';
       showAlert('tutupAlert','success','✅ Data dimuat.');
-    } else showAlert('tutupAlert','error','❌ '+res.pesan);
+    }else showAlert('tutupAlert','error','❌ '+res.pesan);
   });
 }
 
@@ -812,7 +808,7 @@ function hitungFisik(){
 }
 
 function submitTutupKasir(){
-  if(!STATE.tutupData){ showAlert('tutupAlert','error','Muat data hari ini dulu!'); return; }
+  if(!STATE.tutupData){showAlert('tutupAlert','error','Muat data hari ini dulu!');return;}
   showAlert('tutupAlert','info','⏳ Menyimpan...');
   api('simpanTutupKasir',{
     tanggal:STATE.tutupData.tanggal,kasir:STATE.user.nama,
@@ -827,29 +823,29 @@ function submitTutupKasir(){
   },function(res){
     if(res.ok){
       showAlert('tutupAlert','success','🔒 '+res.status+' | Selisih: '+fRp(res.selisih));
-      ['tk_100','tk_50','tk_pecahan','tk_dropSafe','tk_totalFisik'].forEach(function(id){ document.getElementById(id).value=0; });
+      ['tk_100','tk_50','tk_pecahan','tk_dropSafe','tk_totalFisik'].forEach(function(id){document.getElementById(id).value=0;});
       document.getElementById('tk_ket').value='';
       STATE.tutupData=null;
       document.getElementById('tutupSummary').innerHTML='✅ Tutup kasir berhasil disimpan.';
-    } else showAlert('tutupAlert','error','❌ '+res.pesan);
+    }else showAlert('tutupAlert','error','❌ '+res.pesan);
   });
 }
 
 function updateQris(){
   var noSeri=document.getElementById('qris_noSeri').value.trim();
-  if(!noSeri){ alert('Masukkan No Seri!'); return; }
+  if(!noSeri){alert('Masukkan No Seri!');return;}
   api('updateQrisPending',{noSeri:noSeri,metodeBaru:'QRIS'},function(res){
     alert(res.ok?'✅ '+res.pesan:'❌ '+res.pesan);
-    if(res.ok) document.getElementById('qris_noSeri').value='';
+    if(res.ok)document.getElementById('qris_noSeri').value='';
   });
 }
 
 function loadPiutang(){
   document.getElementById('piutangList').innerHTML='<div class="loading"><div class="spinner"></div><br>Memuat...</div>';
   api('getPiutangList',{},function(res){
-    if(!res.ok){ document.getElementById('piutangList').innerHTML='<p style="color:#EF4444;padding:12px">❌ '+res.pesan+'</p>'; return; }
+    if(!res.ok){document.getElementById('piutangList').innerHTML='<p style="color:#EF4444;padding:12px">❌ '+res.pesan+'</p>';return;}
     var list=res.data;
-    if(!list.length){ document.getElementById('piutangList').innerHTML='<p style="text-align:center;color:#64748B;padding:20px">✅ Tidak ada piutang outstanding.</p>'; return; }
+    if(!list.length){document.getElementById('piutangList').innerHTML='<p style="text-align:center;color:#64748B;padding:20px">✅ Tidak ada piutang outstanding.</p>';return;}
     var html='';
     list.forEach(function(p){
       html+='<div class="tiketItem">'+
@@ -877,17 +873,17 @@ function loadPiutang(){
 function lunasPiutang(rowNum){
   var jumlah=parseFloat(document.getElementById('lns_'+rowNum).value);
   var metode=document.getElementById('met_'+rowNum).value;
-  if(!jumlah){ alert('Masukkan jumlah!'); return; }
+  if(!jumlah){alert('Masukkan jumlah!');return;}
   api('lunasPiutang',{rowNum:rowNum,jumlahBayar:jumlah,metode:metode,kasir:STATE.user.nama},function(res){
     alert(res.ok?(res.isLunas?'✅ LUNAS PENUH!':'✅ Cicilan dicatat. Sisa: '+fRp(res.sisaBaru)):'❌ '+res.pesan);
-    if(res.ok) loadPiutang();
+    if(res.ok)loadPiutang();
   });
 }
 
 function loadDashboard(){
   document.getElementById('kpiGrid').innerHTML='<div class="loading" style="grid-column:span 2"><div class="spinner"></div><br>Memuat...</div>';
   api('getDashboardRingkas',{},function(res){
-    if(!res.ok) return;
+    if(!res.ok)return;
     document.getElementById('kpiGrid').innerHTML=
       '<div class="kpiCard green"><div class="val">'+fRp(res.omsetHari)+'</div><div class="lbl">Omset Hari Ini ('+res.txHari+' trx)</div></div>'+
       '<div class="kpiCard red"><div class="val">'+fRp(res.keluarHari)+'</div><div class="lbl">Pengeluaran</div></div>'+
